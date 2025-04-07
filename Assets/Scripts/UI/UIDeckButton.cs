@@ -28,7 +28,7 @@ public class UIDeckButton : MonoBehaviour
 
     private void UpdateButtonText()
     {
-        buttonText.text = $"Deck\n{player.deck.Count}";
+        buttonText.text = $"{player.deck.Count}";
     }
 
     private void DrawCard()

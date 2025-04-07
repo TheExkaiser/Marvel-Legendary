@@ -25,8 +25,8 @@ public class HeroCardSO : CardSO
 
     public override void PlayCard(GameManager gameManager)
     {
-        gameManager.player.attacks += attack;
-        gameManager.player.resources += recruitPoints;
+        gameManager.player.AddAttacks(attack);
+        gameManager.player.AddResources(recruitPoints);
 
     }
 }

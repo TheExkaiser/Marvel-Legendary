@@ -9,7 +9,6 @@ public class Card : MonoBehaviour
     public Image cardImage;
     public GameObject player;
     public GameObject playerHand;
-    public GameObject playedCards;
     public List<CardSO> playerDiscard;
     public Button button;
     public GameManager gameManager;
@@ -18,16 +17,17 @@ public class Card : MonoBehaviour
     private GameObject cardSlot;
     public bool played;
 
+    Transform playedCards;
+
 
 
     void Start()
     {
         player = GameObject.Find("Player");
-        playedCards = GameObject.Find("PlayedCards");
         playerDiscard = player.GetComponent<Player>().discard;
         playerHand = GameObject.Find("PlayerHand");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
+        playedCards = player.GetComponent<Player>().playedCards;
         cardsPool = gameManager.cardsPool;
         cardSlotsPool = gameManager.cardSlotsPool;
 
@@ -67,26 +67,16 @@ public class Card : MonoBehaviour
     {
         if (!played) 
         {
+            transform.parent.parent = playedCards;
             cardData.PlayCard(gameManager);
             played = true;
         }
         
-        if (gameObject.transform.parent.parent == playerHand.transform)
-        {
-            transform.parent.parent = playedCards.transform;
-        }
-
-
-
-        else if (transform.parent.parent == playedCards.transform)
-        {
-            DiscardCard();
-        }
     }
 
     public void DiscardCard()
     {
-        playerDiscard.Add(cardData);
+        playerDiscard.Insert(0, cardData);
         RemovePrefab();
     }
 }
