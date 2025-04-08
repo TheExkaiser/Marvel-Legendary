@@ -4563,6 +4563,8 @@ MonoBehaviour:
   cardSlotsPool: {fileID: 1856897978}
   player: {fileID: 1344993897}
   specialAbilities: {fileID: 1170323278}
+  hqDeck: {fileID: 1636755022}
+  hqDeckList: []
 --- !u!1001 &805258007
 PrefabInstance:
   m_ObjectHideFlags: 0
