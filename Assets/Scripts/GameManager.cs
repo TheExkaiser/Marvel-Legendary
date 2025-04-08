@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public Transform cardsPool;
     public Transform cardSlotsPool;
     public Player player;
-
+    public SpecialAbilities specialAbilities;
 
     // Start is called before the first frame update
     void Start()

@@ -55,19 +55,15 @@ public class Card : MonoBehaviour
 
     public void RemovePrefab()
     {
-        cardSlot = gameObject.transform.parent.gameObject;
-        
-        cardSlot.transform.parent = cardSlotsPool;
         gameObject.transform.parent = cardsPool;
         gameObject.SetActive(false);
-        cardSlot.SetActive(false);
     }
 
     public void PlayCard()
     {
         if (!played) 
         {
-            transform.parent.parent = playedCards;
+            transform.parent = playedCards;
             cardData.PlayCard(gameManager);
             played = true;
         }

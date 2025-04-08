@@ -35,13 +35,13 @@ public class StatePlayersTurn : MonoBehaviour
 
         for(int i = 0; i< cardsInHand; i++)
         {
-            card = playerHand.GetChild(0).GetChild(0).GetComponent<Card>();
+            card = playerHand.GetChild(0).GetComponent<Card>();
             card.DiscardCard();
         }
 
         for (int i = 0; i < cardsPlayed; i++)
         {
-            card = playedCards.GetChild(0).GetChild(0).GetComponent<Card>();
+            card = playedCards.GetChild(0).GetComponent<Card>();
             card.DiscardCard();
         }
 

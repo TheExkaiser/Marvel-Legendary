@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
 
@@ -10,11 +11,13 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject cardsPool;
     [SerializeField] GameObject cardSlotsPool;
     public GameObject playerHand;
+    public PlayerHandManager playerHandManager;
     public Transform playedCards;
     [SerializeField] CardSetSO startingDeck;
     public int resources;
     public int attacks;
     public int victoryPoints;
+    public RectTransform deckTransform;
 
     public List<CardSO> deck;
     public List<CardSO> discard;
@@ -55,19 +58,26 @@ public class Player : MonoBehaviour
 
     public void DrawCard(int number, List<CardSO> deck)
     {
-        GameObject cardSlot = cardSlotsPool.transform.GetChild(0).transform.gameObject;
-        GameObject card = cardsPool.transform.GetChild(0).transform.gameObject;
-        card.SetActive(true);
-        cardSlot.SetActive(true);
-        cardSlot.transform.parent = playerHand.transform;
-        card.transform.parent = cardSlot.transform;
-        card.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-        card.GetComponent<Card>().cardData = deck[0];
-        card.GetComponent<Card>().PopulateCardPrefab();
+        if (deck.Count > 0)
+        {
+            GameObject card = cardsPool.transform.GetChild(0).transform.gameObject;
+            RectTransform cardTransform = card.GetComponent<RectTransform>();
+            Card cardScript = card.GetComponent<Card>();
 
-        deck.RemoveAt(0);       
+            cardTransform.parent = playerHand.transform;
+            cardTransform.localPosition = deckTransform.localPosition;
+            card.SetActive(true);
+
+            playerHandManager.UpdateCardsPositions();
+
+
+            cardScript.cardData = deck[0];
+            cardScript.PopulateCardPrefab();
+
+            deck.RemoveAt(0);
+
+        }
     }
-
     private void CheckDeckIfEmpty()
     { 
         if (deck.Count == 0) 

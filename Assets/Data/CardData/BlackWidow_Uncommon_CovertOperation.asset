@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e37910785570874e99d77da060d0f40, type: 3}
-  m_Name: BlackWidow_4Uncommon
+  m_Name: BlackWidow_Uncommon_CovertOperation
   m_EditorClassIdentifier: 
   name: Covert Operation
+  gameSet: Core Set
+  cardType: 0
   image: {fileID: 21300000, guid: c53f9b514a7ccf047abb5e5f450072c0, type: 3}
   heroName: Black Widow
   team: 01000000
@@ -20,8 +22,9 @@ MonoBehaviour:
   cost: 4
   recruitPoints: 0
   recruitPointsPlus: 0
-  attack: 0
+  attack: 2
   attackPlus: 1
   heroCardsToDraw: 0
   bystandersToRescue: 0
-  specialAbility: You get +1 [ATTACK] for each Bystander in your Victory Pile.
+  specialAbilityText: 
+  hasUniqueAbility: 1

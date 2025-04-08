@@ -9,11 +9,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] TextMeshProUGUI playerResourcesText;
     [SerializeField] TextMeshProUGUI playerAttacksText;
+    [SerializeField] Button playedCardsButton;
+    [SerializeField] GameObject playedCardsGO;
     Player player;
 
     private void Start()
     {
-        player = gameManager.player;    
+        player = gameManager.player;
+        playedCardsButton.onClick.AddListener(TogglePlayedCardsWindow);
     }
 
     public void UpdateResourcesText() 
@@ -24,5 +27,11 @@ public class UIManager : MonoBehaviour
     public void UpdateAttacksText()
     {
         playerAttacksText.text = "Attacks: " + player.attacks;
+    }
+
+    public void TogglePlayedCardsWindow() 
+    { 
+        if(playedCardsGO.activeSelf) {playedCardsGO.SetActive(false);}
+        else { playedCardsGO.SetActive(true);}
     }
 }
