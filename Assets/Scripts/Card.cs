@@ -9,6 +9,8 @@ public class Card : MonoBehaviour
     public Image cardImage;
     public GameObject player;
     public GameObject playerHand;
+    public CardContainerAutoLayout playerHandManger;
+    public CardContainerAutoLayout playedCardsManger;
     public List<CardSO> playerDiscard;
     public Button button;
     public GameManager gameManager;
@@ -26,8 +28,10 @@ public class Card : MonoBehaviour
         player = GameObject.Find("Player");
         playerDiscard = player.GetComponent<Player>().discard;
         playerHand = GameObject.Find("PlayerHand");
+        playerHandManger = playerHand.GetComponent<CardContainerAutoLayout>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playedCards = player.GetComponent<Player>().playedCards;
+        playedCardsManger = playedCards.GetComponent<CardContainerAutoLayout>();
         cardsPool = gameManager.cardsPool;
         cardSlotsPool = gameManager.cardSlotsPool;
 
@@ -66,6 +70,8 @@ public class Card : MonoBehaviour
             transform.parent = playedCards;
             cardData.PlayCard(gameManager);
             played = true;
+            playerHandManger.UpdateCardsPositions();
+            playedCardsManger.UpdateCardsPositions();
         }
         
     }

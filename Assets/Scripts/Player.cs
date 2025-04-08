@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject cardsPool;
     [SerializeField] GameObject cardSlotsPool;
     public GameObject playerHand;
-    public PlayerHandManager playerHandManager;
+    public CardContainerAutoLayout playerHandManager;
     public Transform playedCards;
     [SerializeField] CardSetSO startingDeck;
     public int resources;
