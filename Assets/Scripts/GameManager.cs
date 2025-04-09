@@ -50,10 +50,13 @@ public class GameManager : MonoBehaviour
 
             cardRect.localPosition = hqDeck.GetComponent<RectTransform>().localPosition;
             card.SetParent(slot);
+            
             cardScript.cardData = hqDeckList[0];
+            hqDeckList.RemoveAt(0);
+
             cardScript.PopulateCardPrefab();
             card.gameObject.SetActive(true);
-            cardRect.DOAnchorPos(slot.localPosition, 0.5f);
+            cardRect.DOAnchorPos(new Vector2(0,0), 0.5f);
             
         }
     }

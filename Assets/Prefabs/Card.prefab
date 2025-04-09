@@ -36,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 240, y: 336.48}
+  m_AnchoredPosition: {x: -86.349, y: -121.06}
+  m_SizeDelta: {x: 172.69812, y: 242.12268}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &3584648648733747579
 CanvasRenderer:
@@ -137,6 +137,8 @@ MonoBehaviour:
   cardImage: {fileID: 3316005719067625310}
   player: {fileID: 0}
   playerHand: {fileID: 0}
+  playerHandManger: {fileID: 0}
+  playedCardsManger: {fileID: 0}
   playerDiscard: []
   button: {fileID: 6828837648828238942}
   gameManager: {fileID: 0}
