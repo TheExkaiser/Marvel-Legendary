@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class ClickHandler : MonoBehaviour
 {
     private InputAction clickAction;
+
 
     private void Awake()
     {
@@ -17,6 +19,7 @@ public class ClickHandler : MonoBehaviour
 
     private void OnClick(InputAction.CallbackContext ctx)
     {
+
         if (Camera.main == null || Pointer.current == null)
             return;
 
@@ -27,6 +30,8 @@ public class ClickHandler : MonoBehaviour
             IClickable clickable = hit.collider.GetComponent<IClickable>();
             clickable?.OnClick();
         }
+        
+        
     }
         
         

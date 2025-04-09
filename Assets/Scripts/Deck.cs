@@ -8,7 +8,8 @@ public class Deck : MonoBehaviour,IClickable
     [SerializeField] GameManager gameManager;
     
     public void OnClick() 
-    { 
+    {
+        Debug.Log("Deck click");
         gameManager.DrawFromDeck(name);    
     }
 
