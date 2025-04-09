@@ -15,7 +15,6 @@ public class UIDeckButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        button.onClick.AddListener(DrawCard);
         deck = player.deck;
     }
 
@@ -31,8 +30,5 @@ public class UIDeckButton : MonoBehaviour
         buttonText.text = $"{player.deck.Count}";
     }
 
-    private void DrawCard()
-    {
-        player.DrawCard(1, deck);
-    }
+    
 }

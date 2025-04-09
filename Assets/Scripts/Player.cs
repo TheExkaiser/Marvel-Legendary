@@ -56,28 +56,6 @@ public class Player : MonoBehaviour
         Debug.Log($"Player rescued {number} bystanders!");
     }
 
-    public void DrawCard(int number, List<CardSO> deck)
-    {
-        if (deck.Count > 0)
-        {
-            GameObject card = cardsPool.transform.GetChild(0).transform.gameObject;
-            RectTransform cardTransform = card.GetComponent<RectTransform>();
-            Card cardScript = card.GetComponent<Card>();
-
-            cardTransform.parent = playerHand.transform;
-            cardTransform.localPosition = deckTransform.localPosition;
-            card.SetActive(true);
-
-            playerHandManager.UpdateCardsPositions();
-
-
-            cardScript.cardData = deck[0];
-            cardScript.PopulateCardPrefab();
-
-            deck.RemoveAt(0);
-
-        }
-    }
     private void CheckDeckIfEmpty()
     { 
         if (deck.Count == 0) 
