@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.22669499, y: 0.22669499, z: 0.22669499}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,13 +98,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 0}
-  cardImage: {fileID: 0}
   player: {fileID: 0}
   playerHand: {fileID: 0}
   playerHandManger: {fileID: 0}
   playedCardsManger: {fileID: 0}
   playerDiscard: []
-  button: {fileID: 0}
   gameManager: {fileID: 0}
   cardsPool: {fileID: 0}
   cardSlotsPool: {fileID: 0}

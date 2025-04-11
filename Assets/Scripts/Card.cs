@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour, IClickable
 {
     public CardSO cardData;
-    public Sprite cardImage;
     public GameObject player;
     public GameObject playerHand;
     public CardContainerAutoLayout playerHandManger;
@@ -19,8 +18,7 @@ public class Card : MonoBehaviour, IClickable
     public bool played;
 
     Transform playedCards;
-
-
+    SortingLayerManager sortingLayerManager;
 
     void Start()
     {
@@ -55,7 +53,7 @@ public class Card : MonoBehaviour, IClickable
     {
         if (cardData)
         {
-            cardImage = cardData.image;
+            gameObject.GetComponent<SpriteRenderer>().sprite = cardData.image;
         }
     }
 
@@ -67,7 +65,7 @@ public class Card : MonoBehaviour, IClickable
 
     public void PlayCard()
     {
-        if (!played) 
+        if (!played)
         {
             transform.parent = playedCards;
             cardData.PlayCard(gameManager);
@@ -75,13 +73,22 @@ public class Card : MonoBehaviour, IClickable
             playerHandManger.UpdateCardsPositions();
             playedCardsManger.UpdateCardsPositions();
         }
-        
+
     }
 
     public void DiscardCard()
     {
         playerDiscard.Insert(0, cardData);
         RemovePrefab();
+    }
+
+    public void UpdateSortingLayer()
+    { 
+        sortingLayerManager = transform.parent.GetComponent<SortingLayerManager>();
+        if (sortingLayerManager)
+        {
+            sortingLayerManager.SetSortingLayer();
+        }
     }
 
 }

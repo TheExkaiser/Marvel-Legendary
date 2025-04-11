@@ -8,11 +8,9 @@ public class CardContainerAutoLayout : MonoBehaviour
 {
     [SerializeField] float spacing;
     [SerializeField] float spacingModifier;
-    RectTransform rectTransform;
+    Transform cardTransform;
     Vector2 startingPosition;
-    Vector2 lastPosition;
     int childrenCount;
-    float cardWidth;
     float currentSpacing;
 
     // Start is called before the first frame update
@@ -32,21 +30,20 @@ public class CardContainerAutoLayout : MonoBehaviour
         childrenCount = gameObject.transform.childCount;
         if (childrenCount != 0) 
         {
-            rectTransform = gameObject.transform.GetChild(0).GetComponent<RectTransform>();
-            cardWidth = rectTransform.rect.width;
+            cardTransform = gameObject.transform.GetChild(0).transform;
             currentSpacing = spacing;
 
             if (childrenCount >= 5) { currentSpacing = currentSpacing + currentSpacing * childrenCount / spacingModifier; }
 
-            startingPosition = new Vector2(0.5f - (childrenCount - 1) * (cardWidth + currentSpacing) / 2, 0);
+            startingPosition = new Vector2(0.5f - (childrenCount - 1) * currentSpacing / 2, 0);
 
 
 
 
             for (int i = 0; i < childrenCount; i++)
             {
-                float p = startingPosition.x + i * (cardWidth + currentSpacing);
-                gameObject.transform.GetChild(i).GetComponent<RectTransform>().DOAnchorPos(new Vector2(p, 0), 0.5f);
+                float p = startingPosition.x + i * currentSpacing;
+                gameObject.transform.GetChild(i).transform.DOMove(new Vector3(p, 0,0), 0.5f);
             }
 
         }

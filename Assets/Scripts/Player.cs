@@ -8,34 +8,42 @@ public class Player : MonoBehaviour
 {
     [SerializeField] GameManager gameManager;
     [SerializeField] UIManager uiManager;
-    [SerializeField] GameObject cardsPool;
-    [SerializeField] GameObject cardSlotsPool;
-    public GameObject playerHand;
+    public Transform playerHand;
+    public Transform playerDeck;
+    public List<CardSO> deckContents;
+
     public CardContainerAutoLayout playerHandManager;
     public Transform playedCards;
-    [SerializeField] CardSetSO startingDeck;
+    public int defaultCardsToDraw;
+    public int cardsToDraw;
+
     public int resources;
     public int attacks;
     public int victoryPoints;
-    public RectTransform deckTransform;
 
-    public List<CardSO> deck;
     public List<CardSO> discard;
     public List<CardSO> teleport;
     public List<CardSO> cardsPlayedList;
 
     private void Start()
     {
-        StartGame();
+        cardsToDraw = defaultCardsToDraw;
     }
+
     private void Update()
     {
+        
+    }
+
+    public void DrawCard(int number) 
+    {
+        gameManager.DrawFromDeckLogic(playerDeck, deckContents, playerHand, number);
         CheckDeckIfEmpty();
     }
 
-    void StartGame()
+    public void DrawNewHand()
     {
-        CreateStartingDeck();
+        DrawCard(cardsToDraw);          
     }
 
     public void AddAttacks(int value) 
@@ -58,7 +66,7 @@ public class Player : MonoBehaviour
 
     private void CheckDeckIfEmpty()
     { 
-        if (deck.Count == 0) 
+        if (deckContents.Count == 0) 
         {
             Debug.Log("Player's Deck is empty...");
             ShuffleDiscardIntoDeck(); 
@@ -72,18 +80,12 @@ public class Player : MonoBehaviour
         {
             for (int i = 0; i < discard.Count; i++)
             {
-                deck.Add(discard[i]);
+                deckContents.Add(discard[i]);
             }
             discard.Clear();
-            gameManager.Shuffle(deck);
+            gameManager.Shuffle(deckContents);
         }
     }
 
-    public void CreateStartingDeck()
-    { 
-        for (int i = 0; i< startingDeck.cards.Count; i++) 
-        {
-            deck.Add(startingDeck.cards[i]);
-        }
-    }
+    
 }
