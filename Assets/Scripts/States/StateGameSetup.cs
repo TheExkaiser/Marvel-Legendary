@@ -12,11 +12,14 @@ public class StateGameSetup : MonoBehaviour
 
     [SerializeField] CardSetSO startingPlayerDeck;
     Player player;
+    UIManager uiManager;
+    StateManager stateManager;
 
     private void Start()
     {
         player = gameManager.player;
-
+        uiManager = gameManager.uiManager;
+        stateManager = gameManager.stateManager;
         
         
     }
@@ -37,6 +40,8 @@ public class StateGameSetup : MonoBehaviour
         hQManager.PopulateHQSlots();
         CreateStartingPlayerDeck();
         player.DrawNewHand();
+        Debug.Log("Dzia³a do coroutine");
+        StartCoroutine(ToggleViewDelay());
     }
 
     public void CreateStartingPlayerDeck()
@@ -47,6 +52,15 @@ public class StateGameSetup : MonoBehaviour
         }
 
         gameManager.Shuffle(player.deckContents);
+    }
+    IEnumerator ToggleViewDelay() 
+    {
+        Debug.Log("Wawiting for start");
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Started");
+        uiManager.ToggleView();
+        stateManager.ChangeState(StateManager.State.PlayerTurn);
+
     }
 }
 

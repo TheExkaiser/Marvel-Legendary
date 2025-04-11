@@ -16,7 +16,6 @@ public class UIStartGameButton : MonoBehaviour
 
     void PressButton()
     {
-        stateManager.ChangeState(StateManager.State.PlayerTurn);
         stateManager.stateGameSetup.GetComponent<StateGameSetup>().StartGame();
     }
 }

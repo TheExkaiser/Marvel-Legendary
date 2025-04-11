@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     public Transform playerDeck;
     public List<CardSO> deckContents;
 
-    public CardContainerAutoLayout playerHandManager;
     public Transform playedCards;
     public int defaultCardsToDraw;
     public int cardsToDraw;
@@ -24,6 +23,10 @@ public class Player : MonoBehaviour
     public List<CardSO> discard;
     public List<CardSO> teleport;
     public List<CardSO> cardsPlayedList;
+
+    Card card;
+    int playerHandCardsCount;
+    int playedCardsCount;
 
     private void Start()
     {
@@ -46,6 +49,27 @@ public class Player : MonoBehaviour
         DrawCard(cardsToDraw);          
     }
 
+    public void DiscardHand()
+    {
+        playerHandCardsCount = playerHand.childCount;
+        for (int i = 0; i < playerHandCardsCount; i++)
+        {
+            card = playerHand.GetChild(0).GetComponent<Card>();
+            card.DiscardCard();
+        }
+    }
+
+    public void DiscardPlayedCards()
+    {
+        Debug.Log("Dsicardplayed dzia³a");
+        playedCardsCount = playedCards.childCount;
+        for (int i = 0; i < playedCardsCount; i++)
+        {
+            card = playedCards.GetChild(0).GetComponent<Card>();
+            card.DiscardCard();
+        }
+    }
+
     public void AddAttacks(int value) 
     {
         attacks += value;
@@ -55,6 +79,21 @@ public class Player : MonoBehaviour
     public void AddResources(int value) 
     { 
         resources += value;
+        uiManager.UpdateResourcesText();
+    }
+
+    public void ResetAttacks() 
+    {
+        Debug.Log("resetA");
+        attacks = 0; 
+        uiManager.UpdateAttacksText();
+    }
+
+    public void ResetResources()
+    {
+        Debug.Log("resetR");
+
+        resources = 0;
         uiManager.UpdateResourcesText();
     }
 

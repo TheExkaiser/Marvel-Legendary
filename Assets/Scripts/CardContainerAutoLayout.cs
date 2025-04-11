@@ -35,7 +35,7 @@ public class CardContainerAutoLayout : MonoBehaviour
 
             if (childrenCount >= 5) { currentSpacing = currentSpacing + currentSpacing * childrenCount / spacingModifier; }
 
-            startingPosition = new Vector2(0.5f - (childrenCount - 1) * currentSpacing / 2, 0);
+            startingPosition = new Vector3(0.5f - (childrenCount - 1) * currentSpacing / 2, transform.position.y,transform.position.z);
 
 
 
@@ -43,7 +43,7 @@ public class CardContainerAutoLayout : MonoBehaviour
             for (int i = 0; i < childrenCount; i++)
             {
                 float p = startingPosition.x + i * currentSpacing;
-                gameObject.transform.GetChild(i).transform.DOMove(new Vector3(p, 0,0), 0.5f);
+                gameObject.transform.GetChild(i).transform.DOMove(new Vector3(p, transform.position.y, transform.position.z), 0.5f);
             }
 
         }

@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfCards; i++)
         {
-            Debug.Log("drawcardlogic dzia³a " + numberOfCards);
             if (deckContents.Count > 0)
             {
                 GameObject card = cardsPool.transform.GetChild(0).transform.gameObject;
