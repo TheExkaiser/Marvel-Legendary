@@ -8,34 +8,66 @@ public class Player : MonoBehaviour
 {
     [SerializeField] GameManager gameManager;
     [SerializeField] UIManager uiManager;
-    [SerializeField] GameObject cardsPool;
-    [SerializeField] GameObject cardSlotsPool;
-    public GameObject playerHand;
-    public CardContainerAutoLayout playerHandManager;
+    public Transform playerHand;
+    public Transform playerDeck;
+    public List<CardSO> deckContents;
+
     public Transform playedCards;
-    [SerializeField] CardSetSO startingDeck;
+    public int defaultCardsToDraw;
+    public int cardsToDraw;
+
     public int resources;
     public int attacks;
     public int victoryPoints;
-    public RectTransform deckTransform;
 
-    public List<CardSO> deck;
     public List<CardSO> discard;
     public List<CardSO> teleport;
     public List<CardSO> cardsPlayedList;
 
+    Card card;
+    int playerHandCardsCount;
+    int playedCardsCount;
+
     private void Start()
     {
-        StartGame();
+        cardsToDraw = defaultCardsToDraw;
     }
+
     private void Update()
     {
+        
+    }
+
+    public void DrawCard(int number) 
+    {
+        gameManager.DrawFromDeckLogic(playerDeck, deckContents, playerHand, number);
         CheckDeckIfEmpty();
     }
 
-    void StartGame()
+    public void DrawNewHand()
     {
-        CreateStartingDeck();
+        DrawCard(cardsToDraw);          
+    }
+
+    public void DiscardHand()
+    {
+        playerHandCardsCount = playerHand.childCount;
+        for (int i = 0; i < playerHandCardsCount; i++)
+        {
+            card = playerHand.GetChild(0).GetComponent<Card>();
+            card.DiscardCard();
+        }
+    }
+
+    public void DiscardPlayedCards()
+    {
+        Debug.Log("Dsicardplayed dzia³a");
+        playedCardsCount = playedCards.childCount;
+        for (int i = 0; i < playedCardsCount; i++)
+        {
+            card = playedCards.GetChild(0).GetComponent<Card>();
+            card.DiscardCard();
+        }
     }
 
     public void AddAttacks(int value) 
@@ -50,37 +82,30 @@ public class Player : MonoBehaviour
         uiManager.UpdateResourcesText();
     }
 
+    public void ResetAttacks() 
+    {
+        Debug.Log("resetA");
+        attacks = 0; 
+        uiManager.UpdateAttacksText();
+    }
+
+    public void ResetResources()
+    {
+        Debug.Log("resetR");
+
+        resources = 0;
+        uiManager.UpdateResourcesText();
+    }
+
 
     public void RescueBystander(int number)
     {
         Debug.Log($"Player rescued {number} bystanders!");
     }
 
-    public void DrawCard(int number, List<CardSO> deck)
-    {
-        if (deck.Count > 0)
-        {
-            GameObject card = cardsPool.transform.GetChild(0).transform.gameObject;
-            RectTransform cardTransform = card.GetComponent<RectTransform>();
-            Card cardScript = card.GetComponent<Card>();
-
-            cardTransform.parent = playerHand.transform;
-            cardTransform.localPosition = deckTransform.localPosition;
-            card.SetActive(true);
-
-            playerHandManager.UpdateCardsPositions();
-
-
-            cardScript.cardData = deck[0];
-            cardScript.PopulateCardPrefab();
-
-            deck.RemoveAt(0);
-
-        }
-    }
     private void CheckDeckIfEmpty()
     { 
-        if (deck.Count == 0) 
+        if (deckContents.Count == 0) 
         {
             Debug.Log("Player's Deck is empty...");
             ShuffleDiscardIntoDeck(); 
@@ -94,18 +119,12 @@ public class Player : MonoBehaviour
         {
             for (int i = 0; i < discard.Count; i++)
             {
-                deck.Add(discard[i]);
+                deckContents.Add(discard[i]);
             }
             discard.Clear();
-            gameManager.Shuffle(deck);
+            gameManager.Shuffle(deckContents);
         }
     }
 
-    public void CreateStartingDeck()
-    { 
-        for (int i = 0; i< startingDeck.cards.Count; i++) 
-        {
-            deck.Add(startingDeck.cards[i]);
-        }
-    }
+    
 }

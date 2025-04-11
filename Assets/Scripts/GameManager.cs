@@ -7,13 +7,15 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
-
+    public UIManager uiManager;
+    public HQManager hQManager;
+    public StateManager stateManager;
     public Transform cardsPool;
     public Transform cardSlotsPool;
     public Player player;
     public SpecialAbilities specialAbilities;
-    public Transform hqDeck;
-    public List<CardSO> hqDeckList;
+    SortingLayerManager sortingLayerManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,24 +43,53 @@ public class GameManager : MonoBehaviour
     }
 
     public void AddCardToHQ(Transform slot) 
-    { 
-        if (hqDeckList.Count > 0) 
+    {
+        Debug.Log("AddCardToHQ dzia³a");
+    }
+
+    public void DrawFromDeck(string name) 
+    {
+        if (name == "hqDeck")
         {
-            Transform card = cardsPool.GetChild(0);
-            RectTransform cardRect = card.GetComponent<RectTransform>();
-            Card cardScript = card.gameObject.GetComponent<Card>();
-
-            cardRect.localPosition = hqDeck.GetComponent<RectTransform>().localPosition;
-            card.SetParent(slot);
-            
-            cardScript.cardData = hqDeckList[0];
-            hqDeckList.RemoveAt(0);
-
-            cardScript.PopulateCardPrefab();
-            card.gameObject.SetActive(true);
-            cardRect.DOAnchorPos(new Vector2(0,0), 0.5f);
             
         }
+                
     }
+
+    public void DrawFromDeckLogic(Transform deck, List<CardSO> deckContents, Transform target, int numberOfCards)
+    {
+        for (int i = 0; i < numberOfCards; i++)
+        {
+            if (deckContents.Count > 0)
+            {
+                GameObject card = cardsPool.transform.GetChild(0).transform.gameObject;
+                Card cardScript = card.GetComponent<Card>();
+
+
+                card.transform.parent = target;
+                card.transform.position = deck.position;
+                card.SetActive(true);
+
+                cardScript.cardData = deckContents[0];
+                cardScript.PopulateCardPrefab();
+
+                CardContainerAutoLayout containerLayout = target.gameObject.GetComponent<CardContainerAutoLayout>();
+
+                if (containerLayout)
+                {
+                    containerLayout.UpdateCardsPositions();
+                }
+                else
+                {
+                    card.transform.DOMove(target.position, 0.5f);
+                }
+
+                deckContents.RemoveAt(0);
+
+                if (i == numberOfCards - 1) { cardScript.UpdateSortingLayer(); }
+            }
+
+        }
+            }
 
 }

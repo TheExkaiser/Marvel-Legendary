@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Card : MonoBehaviour
+public class Card : MonoBehaviour, IClickable
 {
     public CardSO cardData;
-    public Image cardImage;
     public GameObject player;
     public GameObject playerHand;
     public CardContainerAutoLayout playerHandManger;
     public CardContainerAutoLayout playedCardsManger;
     public List<CardSO> playerDiscard;
-    public Button button;
     public GameManager gameManager;
     public Transform cardsPool;
     public Transform cardSlotsPool;
@@ -20,40 +18,42 @@ public class Card : MonoBehaviour
     public bool played;
 
     Transform playedCards;
-
-
+    SortingLayerManager sortingLayerManager;
 
     void Start()
     {
         player = GameObject.Find("Player");
         playerDiscard = player.GetComponent<Player>().discard;
         playerHand = GameObject.Find("PlayerHand");
-        playerHandManger = playerHand.GetComponent<CardContainerAutoLayout>();
+        //playerHandManger = playerHand.GetComponent<CardContainerAutoLayout>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playedCards = player.GetComponent<Player>().playedCards;
-        playedCardsManger = playedCards.GetComponent<CardContainerAutoLayout>();
+        //playedCardsManger = playedCards.GetComponent<CardContainerAutoLayout>();
         cardsPool = gameManager.cardsPool;
         cardSlotsPool = gameManager.cardSlotsPool;
 
 
-        button.onClick.AddListener(PlayCard);
 
-        
 
     }
 
-    
+
 
     private void OnEnable()
     {
         PopulateCardPrefab();
     }
 
+    public void OnClick()
+    {
+        Debug.Log("CLICKED");
+    }
+
     public void PopulateCardPrefab()
     {
         if (cardData)
         {
-            cardImage.sprite = cardData.image;
+            gameObject.GetComponent<SpriteRenderer>().sprite = cardData.image;
         }
     }
 
@@ -65,7 +65,7 @@ public class Card : MonoBehaviour
 
     public void PlayCard()
     {
-        if (!played) 
+        if (!played)
         {
             transform.parent = playedCards;
             cardData.PlayCard(gameManager);
@@ -73,7 +73,7 @@ public class Card : MonoBehaviour
             playerHandManger.UpdateCardsPositions();
             playedCardsManger.UpdateCardsPositions();
         }
-        
+
     }
 
     public void DiscardCard()
@@ -81,4 +81,14 @@ public class Card : MonoBehaviour
         playerDiscard.Insert(0, cardData);
         RemovePrefab();
     }
+
+    public void UpdateSortingLayer()
+    { 
+        sortingLayerManager = transform.parent.GetComponent<SortingLayerManager>();
+        if (sortingLayerManager)
+        {
+            sortingLayerManager.SetSortingLayer();
+        }
+    }
+
 }
