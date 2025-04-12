@@ -25,12 +25,7 @@ public class StatePlayersTurn : MonoBehaviour
 
     public void EndTurn()
     {
-        player.DiscardHand();
-        player.DiscardPlayedCards();
-        player.ResetAttacks();
-        player.ResetResources();
-        player.DrawNewHand();
-        Debug.Log("PLAYER'S TURN ENDED");
+        EventManager.EndPlayerTurn();
         
     }
 }

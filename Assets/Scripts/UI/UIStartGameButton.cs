@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class UIStartGameButton : MonoBehaviour
 {
     [SerializeField] Button thisButton;
-    [SerializeField] StateManager stateManager;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +15,6 @@ public class UIStartGameButton : MonoBehaviour
 
     void PressButton()
     {
-        stateManager.stateGameSetup.GetComponent<StateGameSetup>().StartGame();
+        EventManager.StartGame();
     }
 }

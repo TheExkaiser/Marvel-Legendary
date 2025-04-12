@@ -26,7 +26,7 @@ public class HQManager : MonoBehaviour
     {
         if (slot.childCount == 0) 
         {
-            gameManager.DrawFromDeckLogic(hqDeck, hqDeckList, slot, 1);
+            gameManager.DrawFromDeckLogic(hqDeck, hqDeckList, slot, 1, Card.CardLocation.HQ);
         }
     }
 }

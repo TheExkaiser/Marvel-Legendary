@@ -5,7 +5,6 @@ using UnityEngine;
 public class SortingLayerManager : MonoBehaviour
 {
     public string sortingLayer;
-    public int sortingLayerID;
     GameObject card;
     SpriteRenderer spriteRenderer;
 

@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public List<CardSO> deckContents;
 
     public Transform playedCards;
+    public Card selectedCard;
     public int defaultCardsToDraw;
     public int cardsToDraw;
 
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         cardsToDraw = defaultCardsToDraw;
+        uiManager = gameManager.uiManager;
     }
 
     private void Update()
@@ -38,15 +40,35 @@ public class Player : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        EventManager.OnPlayerDrewCardsFromDeck += DrawCard;
+        EventManager.OnEndPlayerTurn += DiscardHand;
+        EventManager.OnEndPlayerTurn += DiscardPlayedCards;
+        EventManager.OnEndPlayerTurn += ResetAttacks;
+        EventManager.OnEndPlayerTurn += ResetResources;
+        EventManager.OnEndPlayerTurn += DrawNewHand;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnPlayerDrewCardsFromDeck -= DrawCard;
+        EventManager.OnEndPlayerTurn -= DiscardHand;
+        EventManager.OnEndPlayerTurn -= DiscardPlayedCards;
+        EventManager.OnEndPlayerTurn -= ResetAttacks;
+        EventManager.OnEndPlayerTurn -= ResetResources;
+        EventManager.OnEndPlayerTurn -= DrawNewHand;
+
+    }
     public void DrawCard(int number) 
     {
-        gameManager.DrawFromDeckLogic(playerDeck, deckContents, playerHand, number);
-        CheckDeckIfEmpty();
+        gameManager.DrawFromDeckLogic(playerDeck, deckContents, playerHand, number, Card.CardLocation.PlayerHand);
     }
 
     public void DrawNewHand()
     {
-        DrawCard(cardsToDraw);          
+        EventManager.PlayerDrawCardsFromDeck(cardsToDraw);
+        EventManager.PlayerDrawNewHand();
     }
 
     public void DiscardHand()
@@ -97,13 +119,12 @@ public class Player : MonoBehaviour
         uiManager.UpdateResourcesText();
     }
 
-
     public void RescueBystander(int number)
     {
         Debug.Log($"Player rescued {number} bystanders!");
     }
 
-    private void CheckDeckIfEmpty()
+    public void CheckDeckIfEmpty()
     { 
         if (deckContents.Count == 0) 
         {

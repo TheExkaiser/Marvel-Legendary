@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,20 +18,17 @@ public class StateGameSetup : MonoBehaviour
     {
         player = gameManager.player;
         uiManager = gameManager.uiManager;
-        stateManager = gameManager.stateManager;
-        
-        
+        stateManager = gameManager.stateManager;             
     }
 
-    // Start is called before the first frame update
     private void OnEnable()
     {
-        titleScreen.SetActive(true);
+        EventManager.OnStartGame += StartGame;
     }
 
     private void OnDisable()
     {
-        titleScreen.SetActive(false);
+        EventManager.OnStartGame -= StartGame;
     }
 
     public void StartGame()
@@ -40,6 +36,7 @@ public class StateGameSetup : MonoBehaviour
         hQManager.PopulateHQSlots();
         CreateStartingPlayerDeck();
         player.DrawNewHand();
+        titleScreen.SetActive(false);
         Debug.Log("Dzia³a do coroutine");
         StartCoroutine(ToggleViewDelay());
     }
@@ -55,9 +52,7 @@ public class StateGameSetup : MonoBehaviour
     }
     IEnumerator ToggleViewDelay() 
     {
-        Debug.Log("Wawiting for start");
         yield return new WaitForSeconds(1f);
-        Debug.Log("Started");
         uiManager.ToggleView();
         stateManager.ChangeState(StateManager.State.PlayerTurn);
 

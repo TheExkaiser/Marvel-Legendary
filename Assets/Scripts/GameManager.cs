@@ -14,21 +14,9 @@ public class GameManager : MonoBehaviour
     public Transform cardSlotsPool;
     public Player player;
     public SpecialAbilities specialAbilities;
-    SortingLayerManager sortingLayerManager;
+    [HideInInspector] public GameObject lastCardPlayed;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    Card selectedCard;
 
     public void Shuffle(List<CardSO> deck)
     {
@@ -56,8 +44,9 @@ public class GameManager : MonoBehaviour
                 
     }
 
-    public void DrawFromDeckLogic(Transform deck, List<CardSO> deckContents, Transform target, int numberOfCards)
+    public void DrawFromDeckLogic(Transform deck, List<CardSO> deckContents, Transform target, int numberOfCards, Card.CardLocation cardLocation)
     {
+        CardContainerAutoLayout containerLayout = target.gameObject.GetComponent<CardContainerAutoLayout>();
         for (int i = 0; i < numberOfCards; i++)
         {
             if (deckContents.Count > 0)
@@ -65,15 +54,13 @@ public class GameManager : MonoBehaviour
                 GameObject card = cardsPool.transform.GetChild(0).transform.gameObject;
                 Card cardScript = card.GetComponent<Card>();
 
-
                 card.transform.parent = target;
                 card.transform.position = deck.position;
                 card.SetActive(true);
 
                 cardScript.cardData = deckContents[0];
+                cardScript.cardLocation = cardLocation;
                 cardScript.PopulateCardPrefab();
-
-                CardContainerAutoLayout containerLayout = target.gameObject.GetComponent<CardContainerAutoLayout>();
 
                 if (containerLayout)
                 {
@@ -86,10 +73,33 @@ public class GameManager : MonoBehaviour
 
                 deckContents.RemoveAt(0);
 
+                if (cardLocation == Card.CardLocation.PlayerHand)
+                {
+                    player.CheckDeckIfEmpty();
+                }
+
                 if (i == numberOfCards - 1) { cardScript.UpdateSortingLayer(); }
             }
 
         }
             }
+
+    public void UseCard()
+    {
+        selectedCard = player.selectedCard;
+        if (selectedCard)
+        {
+            if (selectedCard.cardLocation == Card.CardLocation.PlayerHand)
+            {
+                selectedCard.PlayCard();
+            }
+            else if (selectedCard.cardLocation == Card.CardLocation.HQ)
+            {
+                selectedCard.BuyCard();
+            }
+
+        }
+
+    }
 
 }

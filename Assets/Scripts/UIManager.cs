@@ -27,8 +27,10 @@ public class UIManager : MonoBehaviour
     Vector3 playerZoneDefaultPosition;
     Vector3 playerZoneTargetPosition;
     GameObject playedCardsGO;
-    bool boardZoneActive=false;
-    bool playerZoneActive = true;
+    bool boardZoneActive=true;
+    bool playerZoneActive = false;
+    public Button useCardButton;
+    public TextMeshProUGUI useCardButtonText;
 
     private void Start()
     {
@@ -36,6 +38,10 @@ public class UIManager : MonoBehaviour
         playedCardsGO = player.playedCards.gameObject;
         boardZoneDefaultPosition = boardZone.transform.position;
         playerZoneDefaultPosition = playerZone.transform.position;
+    }
+
+    private void Update()
+    {
     }
 
     public void UpdateResourcesText() 
@@ -67,10 +73,33 @@ public class UIManager : MonoBehaviour
             boardZone.DOMove(boardZoneDefaultPosition, 1f);
             playerZone.DOMove(playerZoneHiddenPosition, 1f);
             playerZoneRaycastBlocker.gameObject.SetActive(true);
+            boardZoneRaycastBlocker.gameObject.SetActive(false);
             playerZoneActive = false;
             boardZoneActive = true;
             toggleViewButtonText.text = "Player";
 
+        }
+    }
+
+    public void EnableUseCardButton(Card.CardLocation cardLocation)
+    {
+        useCardButton.gameObject.SetActive(true);
+        if (cardLocation == Card.CardLocation.PlayerHand)
+        {
+            useCardButtonText.text = "Play";
+        }
+        else if (cardLocation == Card.CardLocation.HQ)
+        {
+            useCardButtonText.text = "Buy";
+        }
+    }
+    
+    public void DisableUseCardButton()
+    {
+        if (!player.selectedCard)
+        {
+            useCardButtonText.text = "";
+            useCardButton.gameObject.SetActive(false);
         }
     }
 

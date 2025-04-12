@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 
 public class ClickHandler : MonoBehaviour
 {
-    private InputAction clickAction;
-
+    InputAction clickAction;
+    Card selectedCard;
+    Player player;
 
     private void Awake()
     {
+        player = gameObject.GetComponent<GameManager>().player;
         clickAction = new InputAction(type: InputActionType.Button, binding: "<Pointer>/press");
         clickAction.performed += OnClick;
     }
@@ -19,6 +21,7 @@ public class ClickHandler : MonoBehaviour
 
     private void OnClick(InputAction.CallbackContext ctx)
     {
+        selectedCard = player.selectedCard;
 
         if (Camera.main == null || Pointer.current == null)
             return;
@@ -29,6 +32,15 @@ public class ClickHandler : MonoBehaviour
         {
             IClickable clickable = hit.collider.GetComponent<IClickable>();
             clickable?.OnClick();
+            
+        }
+        else
+        {
+            if (selectedCard != null)
+            {
+                selectedCard.DeselectCard();
+            }
+            
         }
         
         
