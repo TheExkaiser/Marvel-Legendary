@@ -19,12 +19,16 @@ MonoBehaviour:
   heroName: Black Widow
   team: 01000000
   heroType: 03000000
-  cost: 2
-  recruitPoints: 0
-  recruitPointsPlus: 0
-  attack: 0
-  attackPlus: 0
+  heroCost: 2
+  heroRecruitPoints: 0
+  heroRecruitPointsPlus: 0
+  heroAttacks: 0
+  heroAttackPlus: 0
   heroCardsToDraw: 1
-  bystandersToRescue: 0
   specialAbilityText: 
   hasUniqueAbility: 1
+  villainGroup: 
+  villainAttacks: 0
+  hasAmbushAbility: 0
+  hasFightAbility: 0
+  hasEscapeAbility: 0

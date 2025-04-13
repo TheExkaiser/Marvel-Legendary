@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         EventManager.OnPlayerDrewCardsFromDeck += DrawCard;
+        EventManager.OnPlayerAddsAttacks += AddAttacks;
+        EventManager.OnPlayerAddsResources += AddResources;
         EventManager.OnEndPlayerTurn += DiscardHand;
         EventManager.OnEndPlayerTurn += DiscardPlayedCards;
         EventManager.OnEndPlayerTurn += ResetAttacks;
@@ -53,6 +55,8 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         EventManager.OnPlayerDrewCardsFromDeck -= DrawCard;
+        EventManager.OnPlayerAddsAttacks -= AddAttacks;
+        EventManager.OnPlayerAddsResources -= AddResources;
         EventManager.OnEndPlayerTurn -= DiscardHand;
         EventManager.OnEndPlayerTurn -= DiscardPlayedCards;
         EventManager.OnEndPlayerTurn -= ResetAttacks;
@@ -62,7 +66,11 @@ public class Player : MonoBehaviour
     }
     public void DrawCard(int number) 
     {
-        gameManager.DrawFromDeckLogic(playerDeck, deckContents, playerHand, number, Card.CardLocation.PlayerHand);
+        if (number > 0)
+        {
+            gameManager.DrawFromDeckLogic(playerDeck, deckContents, playerHand, number, Card.CardLocation.PlayerHand);
+        }
+        
     }
 
     public void DrawNewHand()
@@ -95,12 +103,14 @@ public class Player : MonoBehaviour
     public void AddAttacks(int value) 
     {
         attacks += value;
+        Debug.Log($"Player got +{value} attacks.");
         uiManager.UpdateAttacksText();
     }
 
     public void AddResources(int value) 
     { 
         resources += value;
+        Debug.Log($"Player got +{value} resources.");
         uiManager.UpdateResourcesText();
     }
 

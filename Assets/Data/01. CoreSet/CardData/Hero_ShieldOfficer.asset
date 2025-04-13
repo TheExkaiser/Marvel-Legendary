@@ -19,17 +19,16 @@ MonoBehaviour:
   heroName: 
   team: 00000000
   heroType: 00000000
-  cost: 3
-  recruitPoints: 2
-  recruitPointsPlus: 0
-  attack: 0
-  attackPlus: 0
+  heroCost: 3
+  heroRecruitPoints: 2
+  heroRecruitPointsPlus: 0
+  heroAttacks: 0
+  heroAttackPlus: 0
   heroCardsToDraw: 0
-  bystandersToRescue: 0
   specialAbilityText: 
   hasUniqueAbility: 0
   villainGroup: 
-  attacks: 0
+  villainAttacks: 0
   hasAmbushAbility: 0
   hasFightAbility: 0
   hasEscapeAbility: 0

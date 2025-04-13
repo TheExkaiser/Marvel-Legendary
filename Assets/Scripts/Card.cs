@@ -16,22 +16,25 @@ public class Card : MonoBehaviour, IClickable
     GameObject playerHand;
     Transform playedCards;
     SortingLayerManager sortingLayerManager;
+    HQManager hQManager;
     UIManager uiManager;
     CardContainerAutoLayout playerHandAutoLayout;
     CardContainerAutoLayout playedCardsAutoLayout;
+    Transform hqSlot;
 
     [Header("Stats:")]
-    [SerializeField] int defaultAttacks;
-    public int attacks;
-    [SerializeField] int defaultResources;
-    public int resources;
     bool played;//DOCELOWO PRIVATE
     public bool selected;//DOCELOWO PRIVATE
     public bool selectable = true;
     public float selectedMoveDistance;
 
-    
-    
+    [Header("Hero Stats:")]
+    public int heroCost;
+    public int heroAttacks;
+    public int heroResources;
+    public int heroCardsToDraw;
+
+
 
     public enum CardLocation {None, PlayerHand, City, HQ, Discard, PlayerDeck }
 
@@ -48,6 +51,7 @@ public class Card : MonoBehaviour, IClickable
         uiManager = gameManager.uiManager;
         playerHandAutoLayout = playerHand.GetComponent<CardContainerAutoLayout>();
         playedCardsAutoLayout = playedCards.gameObject.GetComponent<CardContainerAutoLayout>();
+        hQManager = gameManager.hQManager;
     }
 
     private void OnEnable()
@@ -81,7 +85,7 @@ public class Card : MonoBehaviour, IClickable
         if (selectable)
         {
             selectable = false;
-            uiManager.EnableUseCardButton(cardLocation);
+            uiManager.EnableUseCardButton(this);
             selected = true;
             playerComponent.selectedCard = this;
             transform.DOMove(new Vector3(transform.position.x, transform.position.y + selectedMoveDistance, transform.position.z), 0.3f).OnComplete(SetSelectableTrue);
@@ -106,7 +110,12 @@ public class Card : MonoBehaviour, IClickable
     {
         if (cardData)
         {
+            Debug.Log("PopulateCardPrefab");
             gameObject.GetComponent<SpriteRenderer>().sprite = cardData.image;
+            heroCost = cardData.heroCost;
+            heroAttacks = cardData.heroAttacks;
+            heroResources = cardData.heroRecruitPoints;
+            heroCardsToDraw = cardData.heroCardsToDraw;
         }
     }
 
@@ -122,8 +131,10 @@ public class Card : MonoBehaviour, IClickable
         
         if (!played)
         {
-            transform.parent = playedCards;
             DeselectCard();
+            EventManager.PlayerAddsAttacks(heroAttacks);
+            EventManager.PlayerAddsResources(heroResources);
+            transform.parent = playedCards;
             played = true;
             UpdateSortingLayer();
             playerHandAutoLayout.UpdateCardsPositions();
@@ -135,6 +146,11 @@ public class Card : MonoBehaviour, IClickable
     public void BuyCard()
     {
         Debug.Log("Karta kupiona");
+        hqSlot = transform.parent;
+        DiscardCard();
+        playerComponent.resources -= heroCost;
+        uiManager.UpdateResourcesText();
+        hQManager.UpdateSlot(hqSlot);
     }
 
     public void KOCard()
@@ -145,6 +161,7 @@ public class Card : MonoBehaviour, IClickable
     public void DiscardCard()
     {
         Card cardScript = this;
+        transform.DOMoveX(10f, 0.5f);
         cardScript.played = false;
         cardScript.cardLocation = CardLocation.None;
         playerComponent.discard.Insert(0, cardData);

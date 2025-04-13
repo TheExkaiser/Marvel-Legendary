@@ -81,16 +81,18 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void EnableUseCardButton(Card.CardLocation cardLocation)
+    public void EnableUseCardButton(Card card)
     {
-        useCardButton.gameObject.SetActive(true);
-        if (cardLocation == Card.CardLocation.PlayerHand)
+        
+        if (card.cardLocation == Card.CardLocation.PlayerHand)
         {
+            useCardButton.gameObject.SetActive(true);
             useCardButtonText.text = "Play";
         }
-        else if (cardLocation == Card.CardLocation.HQ)
+        else if (card.cardLocation == Card.CardLocation.HQ && card.heroCost<=player.resources)
         {
-            useCardButtonText.text = "Buy";
+            useCardButton.gameObject.SetActive(true);
+            useCardButtonText.text = "Buy ("+card.heroCost+")";
         }
     }
     

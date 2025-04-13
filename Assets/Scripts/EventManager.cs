@@ -9,6 +9,8 @@ public class EventManager : MonoBehaviour
     //PLAYER EVENTS:
     public static event Action<int> OnPlayerDrewCardsFromDeck;
     public static event Action OnPlayerDrewNewHand;
+    public static event Action<int> OnPlayerAddsAttacks;
+    public static event Action<int> OnPlayerAddsResources;
 
 
     //STATE LOGIC EVENTS:
@@ -29,6 +31,16 @@ public class EventManager : MonoBehaviour
     {
         Debug.Log("Invoked Event PlayerDrawNewHand");
         OnPlayerDrewNewHand?.Invoke();
+    }
+
+    public static void PlayerAddsAttacks(int number)
+    {
+        OnPlayerAddsAttacks?.Invoke(number);
+    }
+
+    public static void PlayerAddsResources(int number)
+    {
+        OnPlayerAddsResources?.Invoke(number);
     }
 
     public static void StartGame()

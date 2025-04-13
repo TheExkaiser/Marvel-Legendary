@@ -19,20 +19,19 @@ public class CardSO : ScriptableObject
     public string heroName;
     public List<HeroTeam> team;
     public List<HeroType> heroType;
-    public int cost;
-    public int recruitPoints;
-    public bool recruitPointsPlus;
-    public int attack;
-    public bool attackPlus;
+    public int heroCost;
+    public int heroRecruitPoints;
+    public bool heroRecruitPointsPlus;
+    public int heroAttacks;
+    public bool heroAttackPlus;
     public int heroCardsToDraw;
-    public int bystandersToRescue;
     public string specialAbilityText;
     public bool hasUniqueAbility;
     [Header("")]
 
     [Header("Villain Stats:")]
     public string villainGroup;
-    public int attacks;
+    public int villainAttacks;
     public bool hasAmbushAbility;
     public bool hasFightAbility;
     public bool hasEscapeAbility;
