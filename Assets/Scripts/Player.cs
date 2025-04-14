@@ -91,7 +91,6 @@ public class Player : MonoBehaviour
 
     public void DiscardPlayedCards()
     {
-        Debug.Log("Dsicardplayed dzia³a");
         playedCardsCount = playedCards.childCount;
         for (int i = 0; i < playedCardsCount; i++)
         {
@@ -103,14 +102,12 @@ public class Player : MonoBehaviour
     public void AddAttacks(int value) 
     {
         attacks += value;
-        Debug.Log($"Player got +{value} attacks.");
         uiManager.UpdateAttacksText();
     }
 
     public void AddResources(int value) 
     { 
         resources += value;
-        Debug.Log($"Player got +{value} resources.");
         uiManager.UpdateResourcesText();
     }
 

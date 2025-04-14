@@ -44,9 +44,26 @@ public class UIManager : MonoBehaviour
     {
     }
 
+    private void OnEnable()
+    {
+        EventManager.OnCardBought += UpdateResourcesText;
+        EventManager.OnCardBought += DisableUseCardButton;
+
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnCardBought -= UpdateResourcesText;
+        EventManager.OnCardBought -= DisableUseCardButton;
+    }
+
     public void UpdateResourcesText() 
     {
         playerResourcesText.text = "Resources: " + player.resources;
+    }
+    public void UpdateResourcesText(Card card)
+    {
+        UpdateResourcesText();
     }
 
     public void UpdateAttacksText()
@@ -98,11 +115,12 @@ public class UIManager : MonoBehaviour
     
     public void DisableUseCardButton()
     {
-        if (!player.selectedCard)
-        {
-            useCardButtonText.text = "";
-            useCardButton.gameObject.SetActive(false);
-        }
+        useCardButtonText.text = "";
+        useCardButton.gameObject.SetActive(false);
+    }
+    public void DisableUseCardButton(Card card)
+    {
+        DisableUseCardButton();
     }
 
 }

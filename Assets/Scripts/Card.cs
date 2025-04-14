@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -110,7 +111,6 @@ public class Card : MonoBehaviour, IClickable
     {
         if (cardData)
         {
-            Debug.Log("PopulateCardPrefab");
             gameObject.GetComponent<SpriteRenderer>().sprite = cardData.image;
             heroCost = cardData.heroCost;
             heroAttacks = cardData.heroAttacks;
@@ -127,7 +127,6 @@ public class Card : MonoBehaviour, IClickable
 
     public void PlayCard()
     {
-        Debug.Log("Karta zagrana");
         
         if (!played)
         {
@@ -145,12 +144,9 @@ public class Card : MonoBehaviour, IClickable
     
     public void BuyCard()
     {
-        Debug.Log("Karta kupiona");
-        hqSlot = transform.parent;
-        DiscardCard();
         playerComponent.resources -= heroCost;
-        uiManager.UpdateResourcesText();
-        hQManager.UpdateSlot(hqSlot);
+        EventManager.BuyCard(this);
+        DiscardCard();          
     }
 
     public void KOCard()
@@ -161,11 +157,14 @@ public class Card : MonoBehaviour, IClickable
     public void DiscardCard()
     {
         Card cardScript = this;
-        transform.DOMoveX(10f, 0.5f);
         cardScript.played = false;
+        gameObject.transform.parent = null;
         cardScript.cardLocation = CardLocation.None;
         playerComponent.discard.Insert(0, cardData);
-        cardScript.RemovePrefab();
+        transform.DOMoveX(10f, 0.2f).onComplete = RemovePrefab;
+        //RemovePrefab();
+        
+        
     }
 
     public void UpdateSortingLayer()

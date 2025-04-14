@@ -12,6 +12,8 @@ public class EventManager : MonoBehaviour
     public static event Action<int> OnPlayerAddsAttacks;
     public static event Action<int> OnPlayerAddsResources;
 
+    //HQ EVENTS:
+    public static event Action<Card> OnCardBought;
 
     //STATE LOGIC EVENTS:
     public static event Action OnStartGame;
@@ -23,13 +25,11 @@ public class EventManager : MonoBehaviour
     //=== INVOKE METHODS:                   <= te metody s¹ wywo³ywane przez inne skrypty i uruchamiaj¹ eventy
     public static void PlayerDrawCardsFromDeck(int number)
     {
-        Debug.Log("Invoked Event PlayerDrawCardsFromDeck");
         OnPlayerDrewCardsFromDeck?.Invoke(number);
     }
 
     public static void PlayerDrawNewHand()
     {
-        Debug.Log("Invoked Event PlayerDrawNewHand");
         OnPlayerDrewNewHand?.Invoke();
     }
 
@@ -45,20 +45,22 @@ public class EventManager : MonoBehaviour
 
     public static void StartGame()
     {
-        Debug.Log("Invoked Event StartGame");
         OnStartGame?.Invoke();
     }
 
     public static void FirstTurnStart()
     {
-        Debug.Log("Invoked Event FirstTurnStart");
         OnFirstTurnStart?.Invoke();
     }
 
     public static void EndPlayerTurn()
     {
-        Debug.Log("Invoked Event EndPlayerTurn");
         OnEndPlayerTurn?.Invoke();
+    }
+
+    public static void BuyCard(Card card)
+    {
+        OnCardBought?.Invoke(card);
     }
 
     
