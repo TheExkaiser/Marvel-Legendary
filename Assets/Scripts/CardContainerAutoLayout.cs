@@ -13,18 +13,6 @@ public class CardContainerAutoLayout : MonoBehaviour
     int childrenCount;
     float currentSpacing;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void UpdateCardsPositions()
     {
         childrenCount = gameObject.transform.childCount;
@@ -33,7 +21,8 @@ public class CardContainerAutoLayout : MonoBehaviour
             cardTransform = gameObject.transform.GetChild(0).transform;
             currentSpacing = spacing;
 
-            if (childrenCount >= 5) { currentSpacing = currentSpacing + currentSpacing * childrenCount / spacingModifier; }
+            //if (childrenCount >= 5) { currentSpacing = currentSpacing - currentSpacing * childrenCount / 5; }
+            //else { currentSpacing = spacing; }
 
             startingPosition = new Vector3(0.5f - (childrenCount - 1) * currentSpacing / 2, transform.position.y,transform.position.z);
 

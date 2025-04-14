@@ -3698,7 +3698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16862746, g: 0.16862746, b: 0.16862746, a: 0.9411765}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.92156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7692,7 +7692,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1288504522
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8244,8 +8244,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: State
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b8ab0964738b52f4d8b1b2a3f8788c12, type: 2}
+  m_sharedMaterial: {fileID: 2603397819811565742, guid: b8ab0964738b52f4d8b1b2a3f8788c12, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8269,15 +8269,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51.8
-  m_fontSizeBase: 51.8
+  m_fontSize: 73.55
+  m_fontSizeBase: 73.55
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -8904,7 +8904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c18d28ca839914aae4b9a80ac8ea81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacing: 0.72
+  spacing: 1.5
   spacingModifier: 5
 --- !u!114 &1620385240
 MonoBehaviour:
@@ -12101,7 +12101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c18d28ca839914aae4b9a80ac8ea81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spacing: 0.72
+  spacing: 1.5
   spacingModifier: 5
 --- !u!114 &2119977679
 MonoBehaviour:
@@ -12259,7 +12259,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.44705883}
+  m_Color: {r: 0.06363474, g: 0.082521714, b: 0.09433961, a: 0.7647059}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
