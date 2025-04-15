@@ -26,6 +26,7 @@ public class StateGameSetup : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log("Game setup phase");
         EventManager.OnStartGame += StartGame;
     }
 
@@ -67,7 +68,7 @@ public class StateGameSetup : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         uiManager.ToggleView();
-        stateManager.ChangeState(StateManager.State.PlayerTurn);
+        stateManager.ChangeState(StateManager.State.VillainTurn);
 
     }
 }

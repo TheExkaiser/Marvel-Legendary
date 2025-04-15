@@ -6,15 +6,14 @@ using UnityEngine.UI;
 public class UIButtonEndTurn : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] Button button;
-    [SerializeField] StatePlayersTurn playersTurnState;
     void Start()
     {
-        button.onClick.AddListener(ClickButton);
+        gameObject.GetComponent<Button>().onClick.AddListener(Click);
     }
 
-    void ClickButton() 
+    // Update is called once per frame
+    void Click()
     {
-        playersTurnState.EndTurn();
+        EventManager.EndPlayerTurn();
     }
 }

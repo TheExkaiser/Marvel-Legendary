@@ -12,12 +12,6 @@ public class HQManager : MonoBehaviour
     public List<CardSO> shieldOfficerDeckList;
     
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     private void OnEnable()
     {
         EventManager.OnCardBought += UpdateSlot;
@@ -42,11 +36,11 @@ public class HQManager : MonoBehaviour
         
         if (slot != shieldOfficerSlot)
         {
-            gameManager.DrawFromDeckLogic(hqDeck, hqDeckList, slot, 1, Card.CardLocation.HQ);
+            gameManager.DrawFromDeck(hqDeck, hqDeckList, slot, 1, Card.CardLocation.HQ);
         }
         else
         {
-            gameManager.DrawFromDeckLogic(shieldOfficerSlot, shieldOfficerDeckList, slot, 1, Card.CardLocation.HQ);
+            gameManager.DrawFromDeck(shieldOfficerSlot, shieldOfficerDeckList, slot, 1, Card.CardLocation.HQ);
         }
 
     }

@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Vector3 playerZoneHiddenPosition;
     [SerializeField] GameObject playerZoneRaycastBlocker;
 
+    public UINewStateAnimation uiNewStateAnimation;
+
 
     Player player;
     Vector3 boardZoneDefaultPosition;

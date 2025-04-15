@@ -31,6 +31,7 @@ public class CardSO : ScriptableObject
 
     [Header("Villain Stats:")]
     public string villainGroup;
+    public int victoryPoints;
     public int villainAttacks;
     public bool hasAmbushAbility;
     public bool hasFightAbility;

@@ -9,12 +9,14 @@ public class GameManager : MonoBehaviour
 {
     public UIManager uiManager;
     public HQManager hQManager;
+    public VillainManager villainManager;
     public StateManager stateManager;
     public Transform cardsPool;
     public Transform cardSlotsPool;
     public Player player;
     public SpecialAbilities specialAbilities;
     [HideInInspector] public GameObject lastCardPlayed;
+    public List<CardSO> escapedVillains;
 
     Card selectedCard;
 
@@ -30,24 +32,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddCardToHQ(Transform slot) 
+    public void DrawFromDeck(Transform deck, List<CardSO> deckContents, Transform target, int numberOfCards, Card.CardLocation cardLocation)
     {
-        Debug.Log("AddCardToHQ dzia³a");
+        StartCoroutine(DrawFromDeckLogic(deck, deckContents, target, numberOfCards, cardLocation));
     }
 
-    public void DrawFromDeck(string name) 
-    {
-        if (name == "hqDeck")
-        {
-            
-        }
-                
-    }
-
-    public void DrawFromDeckLogic(Transform deck, List<CardSO> deckContents, Transform target, int numberOfCards, Card.CardLocation cardLocation)
+    IEnumerator DrawFromDeckLogic(Transform deck, List<CardSO> deckContents, Transform target, int numberOfCards, Card.CardLocation cardLocation)
     {
         CardContainerAutoLayout containerLayout = target.gameObject.GetComponent<CardContainerAutoLayout>();
-        for (int i = 0; i < numberOfCards; i++)
+        
+
+            for (int i = 0; i < numberOfCards; i++)
         {
             if (deckContents.Count > 0)
             {
@@ -55,34 +50,39 @@ public class GameManager : MonoBehaviour
                 Card cardScript = card.GetComponent<Card>();
 
                 card.transform.parent = target;
+                if (i == numberOfCards - 1) { cardScript.UpdateSortingLayer(); }
                 card.transform.position = deck.position;
                 card.SetActive(true);
 
                 cardScript.cardData = deckContents[0];
+                deckContents.RemoveAt(0);
                 cardScript.cardLocation = cardLocation;
                 cardScript.PopulateCardPrefab();
 
+
                 if (containerLayout)
                 {
-                    containerLayout.UpdateCardsPositions();
+                    List<float> listofPosition = containerLayout.CalculateCardsPositions(numberOfCards);
+                    card.transform.DOMove(new Vector3(listofPosition[i], target.position.y, target.position.z), 0.5f).OnComplete(() => { });
+                    card.transform.DOScale(0.45f, 0.8f).SetEase(Ease.OutBounce);
                 }
                 else
                 {
                     card.transform.DOMove(target.position, 0.5f);
+                    card.transform.DOScale(0.45f, 0.8f).SetEase(Ease.OutBounce);
                 }
-
-                deckContents.RemoveAt(0);
 
                 if (cardLocation == Card.CardLocation.PlayerHand)
                 {
                     player.CheckDeckIfEmpty();
                 }
 
-                if (i == numberOfCards - 1) { cardScript.UpdateSortingLayer(); }
+                
+                yield return new WaitForSeconds(0.2f);
             }
 
         }
-            }
+    }
 
     public void UseCard()
     {
@@ -101,5 +101,12 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+
+    public void DrawVillainCard()
+    {
+        villainManager.DrawVillainCard();
+    }
+
 
 }

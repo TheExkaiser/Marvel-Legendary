@@ -1,39 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
 
-public class StatePlayersTurn : MonoBehaviour
+public class StateVillainState : MonoBehaviour
 {
     [SerializeField] GameManager gameManager;
     [SerializeField] TextMeshProUGUI phaseText;
-    Player player;
     public string phaseName;
-    UIManager uiManager;
     StateManager stateManager;
+    UIManager uiManager;
+
 
     private void Awake()
     {
-        EventManager.OnEndPlayerTurn += EndTurn;
+        uiManager = gameManager.uiManager;
+        stateManager = gameManager.stateManager;
     }
+
 
     // Start is called before the first frame update
     private void OnEnable()
     {
-        stateManager = gameManager.stateManager;
-        player = gameManager.player;
-        uiManager = gameManager.uiManager;
         phaseText.text = phaseName;
         uiManager.uiNewStateAnimation.PlayAnimation(phaseName);
-        Debug.Log(phaseName);
+        EventManager.OnNewStateAnimationEnd += StateLogic;
     }
 
     private void OnDisable()
     {
+        EventManager.OnNewStateAnimationEnd -= StateLogic;
     }
 
-    public void EndTurn()
+    private void StateLogic()
     {
-        stateManager.ChangeState(StateManager.State.VillainTurn);
+        Debug.Log("Villain state logic dzia³a");
+        gameManager.DrawVillainCard();
+        stateManager.ChangeState(StateManager.State.PlayerTurn);
     }
 }

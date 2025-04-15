@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -919262571
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6b7baba509ab59b4597da690084c6c4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -100,17 +100,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   cardData: {fileID: 0}
-  player: {fileID: 0}
-  playerComponent: {fileID: 0}
-  playerHand: {fileID: 0}
-  playerHandManger: {fileID: 0}
-  playedCardsManger: {fileID: 0}
-  playerDiscard: []
-  cardsPool: {fileID: 0}
-  cardSlotsPool: {fileID: 0}
+  playedColor: {r: 0.8509804, g: 0.8509804, b: 0.8509804, a: 0.8509804}
   played: 0
+  selected: 0
   selectable: 1
   selectedMoveDistance: 0.3
+  heroCost: 0
+  heroAttacks: 0
+  heroResources: 0
+  heroCardsToDraw: 0
+  cardLocation: 0
 --- !u!61 &-1559708505541780373
 BoxCollider2D:
   m_ObjectHideFlags: 0

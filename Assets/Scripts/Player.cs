@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     public List<CardSO> discard;
     public List<CardSO> teleport;
     public List<CardSO> cardsPlayedList;
+    public List<CardSO> victoryPool;
 
     Card card;
     int playerHandCardsCount;
@@ -33,11 +34,6 @@ public class Player : MonoBehaviour
     {
         cardsToDraw = defaultCardsToDraw;
         uiManager = gameManager.uiManager;
-    }
-
-    private void Update()
-    {
-        
     }
 
     private void OnEnable()
@@ -68,7 +64,7 @@ public class Player : MonoBehaviour
     {
         if (number > 0)
         {
-            gameManager.DrawFromDeckLogic(playerDeck, deckContents, playerHand, number, Card.CardLocation.PlayerHand);
+            gameManager.DrawFromDeck(playerDeck, deckContents, playerHand, number, Card.CardLocation.PlayerHand);
         }
         
     }

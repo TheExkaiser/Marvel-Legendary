@@ -22,9 +22,13 @@ public class Card : MonoBehaviour, IClickable
     CardContainerAutoLayout playerHandAutoLayout;
     CardContainerAutoLayout playedCardsAutoLayout;
     Transform hqSlot;
+    SpriteRenderer spriteRenderer;
+
+    [Header("Other:")]
+    [SerializeField] Color playedColor;
 
     [Header("Stats:")]
-    bool played;//DOCELOWO PRIVATE
+    public bool played;//DOCELOWO PRIVATE
     public bool selected;//DOCELOWO PRIVATE
     public bool selectable = true;
     public float selectedMoveDistance;
@@ -37,7 +41,7 @@ public class Card : MonoBehaviour, IClickable
 
 
 
-    public enum CardLocation {None, PlayerHand, City, HQ, Discard, PlayerDeck }
+    public enum CardLocation {None, PlayerHand, City, HQ, Discard, PlayerDeck}
 
     public CardLocation cardLocation;
 
@@ -53,6 +57,7 @@ public class Card : MonoBehaviour, IClickable
         playerHandAutoLayout = playerHand.GetComponent<CardContainerAutoLayout>();
         playedCardsAutoLayout = playedCards.gameObject.GetComponent<CardContainerAutoLayout>();
         hQManager = gameManager.hQManager;
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
     private void OnEnable()
@@ -89,7 +94,7 @@ public class Card : MonoBehaviour, IClickable
             uiManager.EnableUseCardButton(this);
             selected = true;
             playerComponent.selectedCard = this;
-            transform.DOMove(new Vector3(transform.position.x, transform.position.y + selectedMoveDistance, transform.position.z), 0.3f).OnComplete(SetSelectableTrue);
+            transform.DOMove(new Vector3(transform.position.x, transform.position.y + selectedMoveDistance, transform.position.z), 0.3f).OnComplete(() => { if (played) { selectable = true; } } );
         }
         
     }
@@ -122,6 +127,7 @@ public class Card : MonoBehaviour, IClickable
     public void RemovePrefab()
     {
         gameObject.transform.parent = cardsPool;
+        spriteRenderer.color = Color.white;
         gameObject.SetActive(false);
     }
 
@@ -135,10 +141,12 @@ public class Card : MonoBehaviour, IClickable
             EventManager.PlayerAddsResources(heroResources);
             transform.parent = playedCards;
             played = true;
+            selectable = false;
             UpdateSortingLayer();
             playerHandAutoLayout.UpdateCardsPositions();
             playedCardsAutoLayout.UpdateCardsPositions();
             gameManager.lastCardPlayed = gameObject;
+            spriteRenderer.color = playedColor;
         }
     }
     

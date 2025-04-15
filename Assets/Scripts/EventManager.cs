@@ -15,10 +15,13 @@ public class EventManager : MonoBehaviour
     //HQ EVENTS:
     public static event Action<Card> OnCardBought;
 
+
     //STATE LOGIC EVENTS:
+    public static event Action OnNewStateAnimationEnd;
     public static event Action OnStartGame;
     public static event Action OnFirstTurnStart;
     public static event Action OnEndPlayerTurn;
+    public static event Action OnVillainTurn;
 
 
 
@@ -63,7 +66,14 @@ public class EventManager : MonoBehaviour
         OnCardBought?.Invoke(card);
     }
 
+    public static void VillainTurn()
+    {
+        OnVillainTurn?.Invoke();
+    }
     
-
+    public static void NewStateAnimationEnd()
+    {
+        OnNewStateAnimationEnd?.Invoke();
+    }
 
 }
