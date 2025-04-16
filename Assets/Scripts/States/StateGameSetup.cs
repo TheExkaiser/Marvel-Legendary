@@ -26,7 +26,6 @@ public class StateGameSetup : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("Game setup phase");
         EventManager.OnStartGame += StartGame;
     }
 
@@ -42,7 +41,6 @@ public class StateGameSetup : MonoBehaviour
         CreateStartingPlayerDeck();
         player.DrawNewHand();
         titleScreen.SetActive(false);
-        Debug.Log("Dzia³a do coroutine");
         StartCoroutine(ToggleViewDelay());
     }
 

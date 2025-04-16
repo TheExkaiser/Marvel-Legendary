@@ -29,17 +29,37 @@ public class VillainManager : MonoBehaviour
     {
         do
         {
-            
-            if (checkCitySpaceIfEmpty(citySpaces[0]))
+            if (villainDeckContents[0].cardType == CardSO.CardType.Bystander)
             {
-                
-                gameManager.DrawFromDeck(villainDeckTransform, villainDeckContents, citySpaces[0], 1, Card.CardLocation.City);
+                for (int i = 0; i < citySpaces.Count; i++)
+                {
+                    Debug.Log("Sprawdza pole " + citySpaces[i].name);
+                    if (citySpaces[i].childCount != 0)
+                    {
+                        VillainCatchesBystander(citySpaces[i]);
+                        break;
+                    }
+                    else if (i == citySpaces.Count - 1)
+                    {
+                        MastermindCatchesBystander();
+                        break;
+                    }
+                }
             }
             else
             {
-                moveVillains();
-                gameManager.DrawFromDeck(villainDeckTransform, villainDeckContents, citySpaces[0], 1, Card.CardLocation.City);
+                if (CheckCitySpaceIfEmpty(citySpaces[0]))
+                {
+
+                    gameManager.DrawFromDeck(villainDeckTransform, villainDeckContents, citySpaces[0], 1, Card.CardLocation.City);
+                }
+                else
+                {
+                    moveVillains();
+                    gameManager.DrawFromDeck(villainDeckTransform, villainDeckContents, citySpaces[0], 1, Card.CardLocation.City);
+                }
             }
+            
             yield return new WaitForSeconds(1f);
         }
         while (drawAnotherCard);     
@@ -52,11 +72,11 @@ public class VillainManager : MonoBehaviour
             if (i == citySpaces.Count) 
             {
                 cardTransform = citySpaces[i - 1].GetChild(0);
-                villainEscapes(cardTransform.gameObject.GetComponent<Card>());
+                VillainEscapes(cardTransform.gameObject.GetComponent<Card>());
                 break;
             }
 
-            if (checkCitySpaceIfEmpty(citySpaces[i]))
+            if (CheckCitySpaceIfEmpty(citySpaces[i]))
             {
                 cardTransform = citySpaces[i - 1].GetChild(0);
                 cardTransform.DOMove(citySpaces[i].position, 0.5f);
@@ -70,7 +90,7 @@ public class VillainManager : MonoBehaviour
         
     }
 
-    bool checkCitySpaceIfEmpty(Transform slot)
+    bool CheckCitySpaceIfEmpty(Transform slot)
     {
         if (slot.childCount == 0)
         {
@@ -83,11 +103,24 @@ public class VillainManager : MonoBehaviour
         
     }
 
-    void villainEscapes(Card cardScript)
+    void VillainEscapes(Card cardScript)
     {
         gameManager.escapedVillains.Add(cardScript.cardData);
         cardTransform = cardScript.gameObject.transform;
         cardTransform.DOMove(new Vector3(cardTransform.position.x-4f, cardTransform.position.y+10f, cardTransform.position.z), 0.5f).OnComplete(() => { cardScript.RemovePrefab(); });
         
+    }
+
+    void VillainCatchesBystander(Transform citySpace)
+    {
+        Debug.Log("Villain catches bystander");
+        gameManager.DrawFromDeck(villainDeckTransform, villainDeckContents, citySpace, 1, Card.CardLocation.City);
+        GameObject bystanderCard = citySpace.GetChild(1).gameObject;
+        citySpace.GetChild(0).gameObject.GetComponent<Card>().AssignCard(bystanderCard);
+    }
+
+    void MastermindCatchesBystander()
+    {
+        Debug.Log("Mastermind catches bystander");
     }
 }

@@ -38,6 +38,15 @@ public class Card : MonoBehaviour, IClickable
     public int heroAttacks;
     public int heroResources;
     public int heroCardsToDraw;
+    public int heroHasUnigueAbility;
+
+    [Header("Villain Stats:")]
+    public int victoryPoints;
+    public int villainAttacks;
+    public bool villainHasAmbushAbility;
+    public bool villainHasFightAbility;
+    public bool villainHasEscapeAbility;
+    public bool villainHasVillainUniqueAbility;
 
 
 
@@ -73,11 +82,6 @@ public class Card : MonoBehaviour, IClickable
         Debug.Log("CLICKED");
         if (!selected)
         {
-            if (playerComponent.selectedCard != null)
-            {
-                playerComponent.selectedCard.DeselectCard();
-            }
-            
             SelectCard();
         }
         else
@@ -90,11 +94,16 @@ public class Card : MonoBehaviour, IClickable
     {
         if (selectable)
         {
+            if (playerComponent.selectedCard != null)
+            {
+                playerComponent.selectedCard.DeselectCard();
+            }
+
             selectable = false;
             uiManager.EnableUseCardButton(this);
             selected = true;
             playerComponent.selectedCard = this;
-            transform.DOMove(new Vector3(transform.position.x, transform.position.y + selectedMoveDistance, transform.position.z), 0.3f).OnComplete(() => { if (played) { selectable = true; } } );
+            transform.DOMove(new Vector3(transform.position.x, transform.position.y + selectedMoveDistance, transform.position.z), 0.3f).OnComplete(() => { selectable = true; } );
         }
         
     }
@@ -107,9 +116,8 @@ public class Card : MonoBehaviour, IClickable
             selected = false;
             playerComponent.selectedCard = null;
             uiManager.DisableUseCardButton();
-            transform.DOMove(new Vector3(transform.position.x, transform.position.y - selectedMoveDistance, transform.position.z), 0.3f).OnComplete(SetSelectableTrue);
+            transform.DOMove(new Vector3(transform.position.x, transform.position.y - selectedMoveDistance, transform.position.z), 0.3f).OnComplete(() => { if (!played) { selectable = true; } else { selectable = false; } });
         }
-        
     }
 
     public void PopulateCardPrefab()
@@ -133,7 +141,6 @@ public class Card : MonoBehaviour, IClickable
 
     public void PlayCard()
     {
-        
         if (!played)
         {
             DeselectCard();
@@ -170,9 +177,6 @@ public class Card : MonoBehaviour, IClickable
         cardScript.cardLocation = CardLocation.None;
         playerComponent.discard.Insert(0, cardData);
         transform.DOMoveX(10f, 0.2f).onComplete = RemovePrefab;
-        //RemovePrefab();
-        
-        
     }
 
     public void UpdateSortingLayer()
@@ -184,9 +188,12 @@ public class Card : MonoBehaviour, IClickable
         }
     }
 
-    void SetSelectableTrue()
+    public void AssignCard(GameObject card)
     {
-        selectable = true;
+        SpriteRenderer assignedCardSpriteRenderer = card.GetComponent<SpriteRenderer>();
+        card.transform.parent = gameObject.transform;
+        assignedCardSpriteRenderer.sortingLayerName = spriteRenderer.sortingLayerName;
+        assignedCardSpriteRenderer.sortingOrder = spriteRenderer.sortingOrder-1;
     }
 
 }

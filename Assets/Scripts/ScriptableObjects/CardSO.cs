@@ -36,6 +36,7 @@ public class CardSO : ScriptableObject
     public bool hasAmbushAbility;
     public bool hasFightAbility;
     public bool hasEscapeAbility;
+    public bool hasVillainUniqueAbility;
 
     public enum CardType { None,Hero,Villain,Bystander,Wound,SchemeTwist,MasterStrike,Mastermind, MastermindTactic }
     public enum HeroTeam { Shield, Avengers, XMen, SpiderFriends }
@@ -43,6 +44,21 @@ public class CardSO : ScriptableObject
 
 
     public virtual void PlayCard(GameManager gameManager)
+    {
+
+    }
+
+    public virtual void FightVillain()
+    {
+
+    }
+
+    public virtual void VillainEscapes()
+    {
+
+    }
+
+    public virtual void VillainAmbush()
     {
 
     }

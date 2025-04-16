@@ -64,12 +64,12 @@ public class GameManager : MonoBehaviour
                 {
                     List<float> listofPosition = containerLayout.CalculateCardsPositions(numberOfCards);
                     card.transform.DOMove(new Vector3(listofPosition[i], target.position.y, target.position.z), 0.5f).OnComplete(() => { });
-                    card.transform.DOScale(0.45f, 0.8f).SetEase(Ease.OutBounce);
+                    card.transform.DOScale(1.2f, 0.3f).OnComplete(() => { card.transform.DOScale(1f, 0.2f); });
                 }
                 else
                 {
                     card.transform.DOMove(target.position, 0.5f);
-                    card.transform.DOScale(0.45f, 0.8f).SetEase(Ease.OutBounce);
+                    card.transform.DOScale(1.2f, 0.3f).OnComplete(() => { card.transform.DOScale(1f, 0.2f); });
                 }
 
                 if (cardLocation == Card.CardLocation.PlayerHand)
