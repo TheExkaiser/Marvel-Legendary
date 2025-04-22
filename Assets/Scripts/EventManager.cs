@@ -15,6 +15,8 @@ public class EventManager : MonoBehaviour
     //HQ EVENTS:
     public static event Action<Card> OnCardBought;
 
+    //CITY EVENTS:
+    public static event Action<Card> OnCardFought;
 
     //STATE LOGIC EVENTS:
     public static event Action OnNewStateAnimationEnd;
@@ -74,6 +76,10 @@ public class EventManager : MonoBehaviour
     public static void NewStateAnimationEnd()
     {
         OnNewStateAnimationEnd?.Invoke();
+    }
+    public static void FightCard(Card card)
+    {
+        OnCardFought?.Invoke(card);
     }
 
 }

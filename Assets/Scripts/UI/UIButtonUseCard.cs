@@ -22,5 +22,6 @@ public class UIButtonUseCard : MonoBehaviour
     void Click() 
     {
         gameManager.UseCard();
+        gameObject.SetActive(false);
     }
 }

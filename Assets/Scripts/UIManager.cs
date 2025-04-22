@@ -102,16 +102,22 @@ public class UIManager : MonoBehaviour
 
     public void EnableUseCardButton(Card card)
     {
-        
+
         if (card.cardLocation == Card.CardLocation.PlayerHand)
         {
             useCardButton.gameObject.SetActive(true);
             useCardButtonText.text = "Play";
         }
-        else if (card.cardLocation == Card.CardLocation.HQ && card.heroCost<=player.resources)
+        else if (card.cardLocation == Card.CardLocation.HQ && card.heroCost <= player.resources)
         {
             useCardButton.gameObject.SetActive(true);
-            useCardButtonText.text = "Buy ("+card.heroCost+")";
+            useCardButtonText.text = "Buy (" + card.heroCost + ")";
+        }
+
+        else if (card.cardLocation == Card.CardLocation.City && card.villainAttacks <= player.attacks)
+        {
+            useCardButton.gameObject.SetActive(true);
+            useCardButtonText.text = "Fight (" + card.villainAttacks + ")";
         }
     }
     

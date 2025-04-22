@@ -2377,6 +2377,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: bystanderDeck
       objectReference: {fileID: 0}
+    - target: {fileID: 7309601400581531823, guid: d22e1c8acb203ae498cb6b125ed02cb3, type: 3}
+      propertyPath: m_Size.x
+      value: 1.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309601400581531823, guid: d22e1c8acb203ae498cb6b125ed02cb3, type: 3}
+      propertyPath: m_Size.y
+      value: 2.77
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3469,8 +3477,10 @@ MonoBehaviour:
   gameManager: {fileID: 797940999}
   villainDeck: {fileID: 1334377576}
   villainDeckContents:
-  - {fileID: 11400000, guid: 3f02e9d594caf2442a8405e1d5f0da7f, type: 2}
   - {fileID: 11400000, guid: da741df3eb002f34ca074a84ca991313, type: 2}
+  - {fileID: 11400000, guid: 3f02e9d594caf2442a8405e1d5f0da7f, type: 2}
+  - {fileID: 11400000, guid: 3f02e9d594caf2442a8405e1d5f0da7f, type: 2}
+  - {fileID: 11400000, guid: 3f02e9d594caf2442a8405e1d5f0da7f, type: 2}
   - {fileID: 11400000, guid: da741df3eb002f34ca074a84ca991313, type: 2}
   - {fileID: 11400000, guid: da741df3eb002f34ca074a84ca991313, type: 2}
   - {fileID: 11400000, guid: da741df3eb002f34ca074a84ca991313, type: 2}
@@ -7821,6 +7831,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: woundsDeck
       objectReference: {fileID: 0}
+    - target: {fileID: 7309601400581531823, guid: d22e1c8acb203ae498cb6b125ed02cb3, type: 3}
+      propertyPath: m_Size.x
+      value: 1.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309601400581531823, guid: d22e1c8acb203ae498cb6b125ed02cb3, type: 3}
+      propertyPath: m_Size.y
+      value: 2.99
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8050,7 +8068,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -7.02, y: 0, z: 0.11000013}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 923649710}

@@ -97,6 +97,10 @@ public class GameManager : MonoBehaviour
             {
                 selectedCard.BuyCard();
             }
+            else if (selectedCard.cardLocation == Card.CardLocation.City)
+            {
+                selectedCard.FightCard();
+            }
 
         }
 

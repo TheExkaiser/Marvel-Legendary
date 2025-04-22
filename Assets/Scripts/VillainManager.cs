@@ -114,8 +114,8 @@ public class VillainManager : MonoBehaviour
     void VillainCatchesBystander(Transform citySpace)
     {
         Debug.Log("Villain catches bystander");
-        gameManager.DrawFromDeck(villainDeckTransform, villainDeckContents, citySpace, 1, Card.CardLocation.City);
-        GameObject bystanderCard = citySpace.GetChild(1).gameObject;
+        gameManager.DrawFromDeck(villainDeckTransform, villainDeckContents, villainDeckTransform, 1, Card.CardLocation.City);
+        GameObject bystanderCard = villainDeckTransform.GetChild(0).gameObject;
         citySpace.GetChild(0).gameObject.GetComponent<Card>().AssignCard(bystanderCard);
     }
 

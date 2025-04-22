@@ -24,8 +24,13 @@ public class Card : MonoBehaviour, IClickable
     Transform hqSlot;
     SpriteRenderer spriteRenderer;
 
+
     [Header("Other:")]
     [SerializeField] Color playedColor;
+    float assignedCardOffsetX;
+    float assignedCardOffsetY;
+    public List<GameObject> assignedCards;
+
 
     [Header("Stats:")]
     public bool played;//DOCELOWO PRIVATE
@@ -46,7 +51,7 @@ public class Card : MonoBehaviour, IClickable
     public bool villainHasAmbushAbility;
     public bool villainHasFightAbility;
     public bool villainHasEscapeAbility;
-    public bool villainHasVillainUniqueAbility;
+    public bool HasVillainUniqueAbility;
 
 
 
@@ -67,6 +72,9 @@ public class Card : MonoBehaviour, IClickable
         playedCardsAutoLayout = playedCards.gameObject.GetComponent<CardContainerAutoLayout>();
         hQManager = gameManager.hQManager;
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        assignedCardOffsetX = 0.1f;
+        assignedCardOffsetY = 0.1f;
     }
 
     private void OnEnable()
@@ -79,7 +87,6 @@ public class Card : MonoBehaviour, IClickable
 
     public void OnClick()
     {
-        Debug.Log("CLICKED");
         if (!selected)
         {
             SelectCard();
@@ -129,13 +136,37 @@ public class Card : MonoBehaviour, IClickable
             heroAttacks = cardData.heroAttacks;
             heroResources = cardData.heroRecruitPoints;
             heroCardsToDraw = cardData.heroCardsToDraw;
+            villainAttacks = cardData.villainAttacks;
+            villainHasFightAbility = cardData.hasAmbushAbility;
+            villainHasEscapeAbility = cardData.hasEscapeAbility;
+            villainHasFightAbility = cardData.hasFightAbility;
+            HasVillainUniqueAbility = cardData.hasVillainUniqueAbility;
+            victoryPoints = cardData.victoryPoints;
         }
     }
 
     public void RemovePrefab()
     {
         gameObject.transform.parent = cardsPool;
+        if (assignedCards.Count > 0)
+        {
+            for (int i = 0; i < assignedCards.Count; i++)
+            {
+                RemovePrefab();
+            }
+        }
         spriteRenderer.color = Color.white;
+        gameObject.GetComponent<SpriteRenderer>().sprite = null;
+        heroCost = 0;
+        heroAttacks = 0;
+        heroResources = 0;
+        heroCardsToDraw = 0;
+        villainAttacks = 0;
+        villainHasFightAbility = false;
+        villainHasEscapeAbility = false;
+        villainHasFightAbility = false;
+        HasVillainUniqueAbility = cardData.hasVillainUniqueAbility;
+        victoryPoints = 0;
         gameObject.SetActive(false);
     }
 
@@ -162,6 +193,21 @@ public class Card : MonoBehaviour, IClickable
         playerComponent.resources -= heroCost;
         EventManager.BuyCard(this);
         DiscardCard();          
+    }
+
+    public void FightCard()
+    {
+        playerComponent.attacks -= villainAttacks;
+        EventManager.FightCard(this);
+        playerComponent.victoryPool.Add(cardData);
+        if (assignedCards.Count > 0) 
+        { 
+            for (int i = 0; i < assignedCards.Count; i++) 
+            {
+                playerComponent.victoryPool.Add(assignedCards[i].GetComponent<Card>().cardData);
+            }
+        }
+        RemovePrefab();
     }
 
     public void KOCard()
@@ -191,9 +237,12 @@ public class Card : MonoBehaviour, IClickable
     public void AssignCard(GameObject card)
     {
         SpriteRenderer assignedCardSpriteRenderer = card.GetComponent<SpriteRenderer>();
+        assignedCards.Add(card);
         card.transform.parent = gameObject.transform;
         assignedCardSpriteRenderer.sortingLayerName = spriteRenderer.sortingLayerName;
-        assignedCardSpriteRenderer.sortingOrder = spriteRenderer.sortingOrder-1;
+        Debug.Log("Ma mieæ sorting layer " + (spriteRenderer.sortingOrder - (1 * assignedCards.Count)));
+        assignedCardSpriteRenderer.sortingOrder = spriteRenderer.sortingOrder-(1*assignedCards.Count);
+        card.transform.DOMove(new Vector3(transform.position.x + assignedCardOffsetX * assignedCards.Count, transform.position.y+assignedCardOffsetY*assignedCards.Count, transform.position.z), 0.5f);
     }
 
 }
