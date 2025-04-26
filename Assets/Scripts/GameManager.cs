@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
                 if (cardLocation == Card.CardLocation.PlayerHand)
                 {
                     player.CheckDeckIfEmpty();
+                    cardScript.selectable = true;
                 }
 
                 

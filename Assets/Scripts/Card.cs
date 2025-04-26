@@ -199,6 +199,7 @@ public class Card : MonoBehaviour, IClickable
     {
         playerComponent.attacks -= villainAttacks;
         EventManager.FightCard(this);
+        cardData.FightVillain(gameManager);
         playerComponent.victoryPool.Add(cardData);
         if (assignedCards.Count > 0) 
         { 
@@ -207,7 +208,10 @@ public class Card : MonoBehaviour, IClickable
                 playerComponent.victoryPool.Add(assignedCards[i].GetComponent<Card>().cardData);
             }
         }
-        RemovePrefab();
+        transform.DOMoveX(20, 0.5f).onComplete = RemovePrefab;
+        transform.DORotate(new Vector3(0, 0, 360), 0.2f, RotateMode.FastBeyond360)
+                 .SetEase(Ease.Linear)
+                 .SetLoops(-1, LoopType.Restart);
     }
 
     public void KOCard()

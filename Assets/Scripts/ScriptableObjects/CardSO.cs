@@ -48,9 +48,9 @@ public class CardSO : ScriptableObject
 
     }
 
-    public virtual void FightVillain()
+    public virtual void FightVillain(GameManager gameManager)
     {
-
+        Debug.Log("Launched special ability \"Fight\" of a villain: " + name);
     }
 
     public virtual void VillainEscapes()

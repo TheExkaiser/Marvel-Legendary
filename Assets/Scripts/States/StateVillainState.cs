@@ -35,7 +35,6 @@ public class StateVillainState : MonoBehaviour
 
     private void StateLogic()
     {
-        Debug.Log("Villain state logic dzia³a");
         gameManager.DrawVillainCard();
         stateManager.ChangeState(StateManager.State.PlayerTurn);
     }

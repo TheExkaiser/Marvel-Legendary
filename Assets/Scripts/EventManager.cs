@@ -79,6 +79,7 @@ public class EventManager : MonoBehaviour
     }
     public static void FightCard(Card card)
     {
+        Debug.Log("Player defeated a villain!");
         OnCardFought?.Invoke(card);
     }
 

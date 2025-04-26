@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c7ed68c6eac8e48b48b7a49a9f51a9, type: 3}
+  m_Name: Set_Mastermind_Loki
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: 384144261ae8b7b4e99580eed50854e2, type: 2}
+  - {fileID: 11400000, guid: f5d9e5b53ef6696499d13099f61ebb8b, type: 2}
+  - {fileID: 11400000, guid: 3ea54fa046b251c43a8a066e05270504, type: 2}
+  - {fileID: 11400000, guid: aa56a9b45497c7f419660a77b48b942c, type: 2}
+  - {fileID: 11400000, guid: 480d9deb696a3704dbd65c8a7d738393, type: 2}
