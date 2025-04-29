@@ -31,6 +31,7 @@ public class ClickHandler : MonoBehaviour
         if (hit)
         {
             IClickable clickable = hit.collider.GetComponent<IClickable>();
+            // Debug.Log(hit.collider.name);
             clickable?.OnClick();
             
         }

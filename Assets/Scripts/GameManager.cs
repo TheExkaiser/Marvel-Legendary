@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
     public HQManager hQManager;
     public VillainManager villainManager;
+    public MastermindManager mastermindManager;
     public StateManager stateManager;
     public Transform cardsPool;
     public Transform cardSlotsPool;
@@ -88,7 +89,12 @@ public class GameManager : MonoBehaviour
     public void UseCard()
     {
         selectedCard = player.selectedCard;
-        if (selectedCard)
+
+        if (mastermindManager.mastermindSelected)
+        {
+            mastermindManager.FightMastermind();
+        }
+        else if (selectedCard)
         {
             if (selectedCard.cardLocation == Card.CardLocation.PlayerHand)
             {
@@ -107,11 +113,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-
-    public void DrawVillainCard()
+    public void GameWon()
     {
-        villainManager.DrawVillainCard();
+        Debug.Log("You won the game!!!");
     }
-
 
 }

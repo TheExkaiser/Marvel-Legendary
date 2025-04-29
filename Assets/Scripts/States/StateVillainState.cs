@@ -35,7 +35,7 @@ public class StateVillainState : MonoBehaviour
 
     private void StateLogic()
     {
-        gameManager.DrawVillainCard();
+        gameManager.villainManager.DrawVillainCard();
         stateManager.ChangeState(StateManager.State.PlayerTurn);
     }
 }

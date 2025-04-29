@@ -2586,7 +2586,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000676db428952a35c91717ad3cb140d9e2713bb985
+  m_ApplyToSortingLayers: 00000000676db428952a35c91717ad3cb140d9e2713bb98575ddec96
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -3412,6 +3412,7 @@ MonoBehaviour:
   uiManager: {fileID: 971928977}
   hQManager: {fileID: 399340648}
   villainManager: {fileID: 811243176}
+  mastermindManager: {fileID: 1567278769}
   stateManager: {fileID: 327525882}
   cardsPool: {fileID: 431559042}
   cardSlotsPool: {fileID: 0}
@@ -6246,6 +6247,7 @@ MonoBehaviour:
   masterMindDeck: {fileID: 11400000, guid: 75d6cee535c44f24f9396b320c163205, type: 2}
   tacticsDeck: []
   mastermindGO: {fileID: 5723850912870929023}
+  mastermindSelected: 0
 --- !u!1001 &1573684098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8203,7 +8205,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4560911379565640846, guid: 0990a13c58731a740b695eb418900cca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5785222273055909997}
+    - targetCorrespondingSourceObject: {fileID: 4560911379565640846, guid: 0990a13c58731a740b695eb418900cca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5785222273055909996}
   m_SourcePrefab: {fileID: 100100000, guid: 0990a13c58731a740b695eb418900cca, type: 3}
 --- !u!1 &1256481191244974006
 GameObject:
@@ -8305,6 +8313,64 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6321714114296523636, guid: 0990a13c58731a740b695eb418900cca, type: 3}
   m_PrefabInstance: {fileID: 1255419716500548880}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5785222273055909996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5723850912870929023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d237bfd22b20fc04ca7c234284cf51bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 797940999}
+--- !u!61 &5785222273055909997
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5723850912870929023}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.956, y: 2.752}
+    newSize: {x: 1.956, y: 2.752}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.956, y: 2.752}
+  m_EdgeRadius: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -53,6 +53,9 @@ TagManager:
   - name: CardInHand
     uniqueID: 3805888689
     locked: 0
+  - name: ShownCard
+    uniqueID: 2532105589
+    locked: 0
   - name: UI
     uniqueID: 1017976599
     locked: 0

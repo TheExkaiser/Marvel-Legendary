@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
 
 
     Player player;
+    MastermindManager mastermindManager;
     Vector3 boardZoneDefaultPosition;
     Vector3 boardZoneTargetPosition;
     Vector3 playerZoneDefaultPosition;
@@ -37,6 +38,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         player = gameManager.player;
+        mastermindManager = gameManager.mastermindManager;
         playedCardsGO = player.playedCards.gameObject;
         boardZoneDefaultPosition = boardZone.transform.position;
         playerZoneDefaultPosition = playerZone.transform.position;
@@ -98,6 +100,12 @@ public class UIManager : MonoBehaviour
             toggleViewButtonText.text = "Player";
 
         }
+    }
+
+    public void EnableUseCardButtonFightMastermind()
+    {
+        useCardButton.gameObject.SetActive(true);
+        useCardButtonText.text = "Fight Mastermind (" + mastermindManager.tacticsDeck[0].villainAttacks + ")";
     }
 
     public void EnableUseCardButton(Card card)
