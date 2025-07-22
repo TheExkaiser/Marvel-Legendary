@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using static UnityEngine.GraphicsBuffer;
+using static Card;
 
 
 public class GameManager : MonoBehaviour
@@ -31,6 +33,21 @@ public class GameManager : MonoBehaviour
             deck[t] = deck[r];
             deck[r] = tmp;
         }
+    }
+
+    public GameObject DrawCardNoTransform(Transform deckTransform, List<CardSO> deckContents)
+    {
+        GameObject card = cardsPool.transform.GetChild(0).transform.gameObject;
+        Card cardScript = card.GetComponent<Card>();
+
+        card.transform.parent = null;
+        card.transform.position = deckTransform.position;
+        card.SetActive(true);
+        cardScript.cardData = deckContents[0];
+        deckContents.RemoveAt(0);
+        cardScript.PopulateCardPrefab();
+
+        return card;
     }
 
     public void DrawFromDeck(Transform deck, List<CardSO> deckContents, Transform target, int numberOfCards, Card.CardLocation cardLocation)

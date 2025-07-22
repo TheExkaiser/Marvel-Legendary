@@ -61,15 +61,14 @@ public class MastermindManager : MonoBehaviour
     {
         Debug.Log("Fight mastermind dzia³a!");
         player.attacks -= tacticsDeck[0].villainAttacks;
-        gameManager.DrawFromDeck(mastermindGO.transform, tacticsDeck, mastermindGO.transform, 1, Card.CardLocation.None);
-        card = mastermindGO.transform.GetChild(0).gameObject;
+        card = gameManager.DrawCardNoTransform(mastermindGO.transform, tacticsDeck);
         cardSpriteRenderer = card.GetComponent<SpriteRenderer>();
         cardSpriteRenderer.sortingLayerName = "ShownCard";
 
         Sequence mySequence = DOTween.Sequence();
         mySequence.Append(card.transform.DOMove(new Vector3(0f, 0f, card.transform.position.z), 1f));
         mySequence.Join(card.transform.DOScale(new Vector3(2f, 2f, 0f), 1f));
-        mySequence.AppendInterval(3f);
+        mySequence.AppendInterval(2f);
         mySequence.Append(card.transform.DOMoveX(20f, 0.5f));
         mySequence.Join(card.transform.DOScale(new Vector3(1f, 1f, 1f), 0.5f));
         
