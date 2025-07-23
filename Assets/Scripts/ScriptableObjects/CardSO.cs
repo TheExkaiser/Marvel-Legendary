@@ -26,7 +26,7 @@ public class CardSO : ScriptableObject
     public bool heroAttackPlus;
     public int heroCardsToDraw;
     public string specialAbilityText;
-    public bool hasUniqueAbility;
+    public List<GameObject> heroSpecialAbilities;
     [Header("")]
 
     [Header("Villain Stats:")]

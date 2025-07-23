@@ -43,7 +43,7 @@ public class Card : MonoBehaviour, IClickable
     public int heroAttacks;
     public int heroResources;
     public int heroCardsToDraw;
-    public int heroHasUnigueAbility;
+    public List<GameObject> heroSpecialAbilities;
 
     [Header("Villain Stats:")]
     public int victoryPoints;
@@ -142,6 +142,12 @@ public class Card : MonoBehaviour, IClickable
             villainHasFightAbility = cardData.hasFightAbility;
             HasVillainUniqueAbility = cardData.hasVillainUniqueAbility;
             victoryPoints = cardData.victoryPoints;
+
+            for (int i = 0; i < cardData.heroSpecialAbilities.Count; i++) 
+            {
+                heroSpecialAbilities.Add(cardData.heroSpecialAbilities[i]);
+            }
+            
         }
     }
 
@@ -165,7 +171,8 @@ public class Card : MonoBehaviour, IClickable
         villainHasFightAbility = false;
         villainHasEscapeAbility = false;
         villainHasFightAbility = false;
-        HasVillainUniqueAbility = cardData.hasVillainUniqueAbility;
+        HasVillainUniqueAbility = false;
+        heroSpecialAbilities.Clear();
         victoryPoints = 0;
         gameObject.SetActive(false);
     }
@@ -185,6 +192,13 @@ public class Card : MonoBehaviour, IClickable
             playedCardsAutoLayout.UpdateCardsPositions();
             gameManager.lastCardPlayed = gameObject;
             spriteRenderer.color = playedColor;
+            if (heroSpecialAbilities.Count > 0) 
+            { 
+                for (int i = 0; i < heroSpecialAbilities.Count; i++) 
+                {
+                    heroSpecialAbilities[i].GetComponent<ISpecialAbility>().useAbility();
+                }
+            }
         }
     }
     

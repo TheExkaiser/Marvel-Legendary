@@ -26,9 +26,12 @@ MonoBehaviour:
   heroAttackPlus: 0
   heroCardsToDraw: 1
   specialAbilityText: 
-  hasUniqueAbility: 1
+  heroSpecialAbilities:
+  - {fileID: 5077912390746128117, guid: 1965bb48824a7804ebf1ce43fe853f6b, type: 3}
   villainGroup: 
+  victoryPoints: 0
   villainAttacks: 0
   hasAmbushAbility: 0
   hasFightAbility: 0
   hasEscapeAbility: 0
+  hasVillainUniqueAbility: 0
