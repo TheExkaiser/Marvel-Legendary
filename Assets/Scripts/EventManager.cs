@@ -19,7 +19,6 @@ public class EventManager : MonoBehaviour
     public static event Action<Card> OnCardFought;
 
     //STATE LOGIC EVENTS:
-    public static event Action OnNewStateAnimationEnd;
     public static event Action OnStartGame;
     public static event Action OnFirstTurnStart;
     public static event Action OnEndPlayerTurn;
@@ -73,10 +72,6 @@ public class EventManager : MonoBehaviour
         OnVillainTurn?.Invoke();
     }
     
-    public static void NewStateAnimationEnd()
-    {
-        OnNewStateAnimationEnd?.Invoke();
-    }
     public static void FightCard(Card card)
     {
         Debug.Log("Player defeated a villain!");

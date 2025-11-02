@@ -11,24 +11,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI playerResourcesText;
     [SerializeField] TextMeshProUGUI playerAttacksText;
     [SerializeField] TextMeshProUGUI toggleViewButtonText;
-    [Header("   ")]
-    [SerializeField] Transform boardZone;
-    [SerializeField] Vector3 boardZoneHiddenPosition;
-    [SerializeField] GameObject boardZoneRaycastBlocker;
-    [Header("   ")]
-    [SerializeField] Transform playerZone;
-    [SerializeField] Vector3 playerZoneHiddenPosition;
-    [SerializeField] GameObject playerZoneRaycastBlocker;
+    
 
     public UINewStateAnimation uiNewStateAnimation;
 
 
     Player player;
     MastermindManager mastermindManager;
-    Vector3 boardZoneDefaultPosition;
-    Vector3 boardZoneTargetPosition;
-    Vector3 playerZoneDefaultPosition;
-    Vector3 playerZoneTargetPosition;
+    
     GameObject playedCardsGO;
     bool boardZoneActive=true;
     bool playerZoneActive = false;
@@ -40,8 +30,7 @@ public class UIManager : MonoBehaviour
         player = gameManager.player;
         mastermindManager = gameManager.mastermindManager;
         playedCardsGO = player.playedCards.gameObject;
-        boardZoneDefaultPosition = boardZone.transform.position;
-        playerZoneDefaultPosition = playerZone.transform.position;
+        
     }
 
     private void Update()
@@ -77,28 +66,15 @@ public class UIManager : MonoBehaviour
 
     public void ToggleView() 
     {
-        if (!playerZoneActive && boardZoneActive) 
+        if (gameManager.playerZoneFocused)
         {
-            //Show Player
-            playerZone.DOMove(playerZoneDefaultPosition, 1f);
-            boardZone.DOMove(boardZoneHiddenPosition, 1f);
-            boardZoneRaycastBlocker.gameObject.SetActive(true);
-            playerZoneRaycastBlocker.gameObject.SetActive(false);
-            boardZoneActive = false;
-            playerZoneActive = true;
-            toggleViewButtonText.text = "Board";
+            toggleViewButtonText.text = "Player";
+            gameManager.FocusBoard();
         }
         else
         {
-            //Show Board
-            boardZone.DOMove(boardZoneDefaultPosition, 1f);
-            playerZone.DOMove(playerZoneHiddenPosition, 1f);
-            playerZoneRaycastBlocker.gameObject.SetActive(true);
-            boardZoneRaycastBlocker.gameObject.SetActive(false);
-            playerZoneActive = false;
-            boardZoneActive = true;
-            toggleViewButtonText.text = "Player";
-
+            gameManager.FocusPlayer();
+            toggleViewButtonText.text = "Board";
         }
     }
 

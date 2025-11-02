@@ -6,9 +6,9 @@ using UnityEngine.XR;
 
 public class StateManager : MonoBehaviour
 {
-    public GameObject statePlayerTurn;
-    public GameObject stateGameSetup;
-    public GameObject stateVillainTurn;
+    public StatePlayersTurn statePlayerTurn;
+    public StateGameSetup stateGameSetup;
+    public StateVillainState stateVillainTurn;
 
 
     public enum State {PlayerTurn, GameSetup, VillainTurn};
@@ -20,23 +20,28 @@ public class StateManager : MonoBehaviour
 
     public void ChangeState(State state)
     {
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        { 
-            gameObject.transform.GetChild(i).gameObject.SetActive(false);
+        if (state == State.PlayerTurn)
+        {
+            ClearStates();
+            statePlayerTurn.enabled = true;
         }
+        else if (state == State.GameSetup)
+        {
+            ClearStates();
+            stateGameSetup.enabled = true;
+        }
+        else if (state == State.VillainTurn)
+        {
+            ClearStates();
+            stateVillainTurn.enabled = true;
+        }
+    }
 
-        if (state == State.GameSetup)
-        {
-            stateGameSetup.SetActive(true);
-        }
-        else if(state == State.VillainTurn) 
-        {
-            stateVillainTurn.SetActive(true);
-        }
-        else if(state == State.PlayerTurn) 
-        { 
-            statePlayerTurn.SetActive(true);
-        }
+    void ClearStates()
+    {
+        stateVillainTurn.enabled = false;
+        stateGameSetup.enabled = false;
+        statePlayerTurn.enabled = false;
     }
     
 }

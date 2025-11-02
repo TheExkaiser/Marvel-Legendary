@@ -14,22 +14,24 @@ public class StatePlayersTurn : MonoBehaviour
 
     private void Awake()
     {
+        stateManager = gameManager.stateManager;
+        player = gameManager.player;
+        uiManager = gameManager.uiManager;
+        phaseText.text = phaseName;
         EventManager.OnEndPlayerTurn += EndTurn;
     }
 
     // Start is called before the first frame update
     private void OnEnable()
     {
-        stateManager = gameManager.stateManager;
-        player = gameManager.player;
-        uiManager = gameManager.uiManager;
-        phaseText.text = phaseName;
+        uiManager.uiNewStateAnimation.OnNewStateAnimationEnd += gameManager.FocusPlayer;
         uiManager.uiNewStateAnimation.PlayAnimation(phaseName);
         Debug.Log(phaseName);
     }
 
     private void OnDisable()
     {
+        uiManager.uiNewStateAnimation.OnNewStateAnimationEnd -= gameManager.FocusPlayer;
     }
 
     public void EndTurn()

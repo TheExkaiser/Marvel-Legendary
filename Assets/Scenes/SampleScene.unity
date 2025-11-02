@@ -1249,6 +1249,9 @@ GameObject:
   m_Component:
   - component: {fileID: 327525883}
   - component: {fileID: 327525882}
+  - component: {fileID: 327525886}
+  - component: {fileID: 327525885}
+  - component: {fileID: 327525884}
   m_Layer: 0
   m_Name: StateManager
   m_TagString: Untagged
@@ -1268,9 +1271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c14649d92d94c4e89963527b45a768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statePlayerTurn: {fileID: 406584197}
-  stateGameSetup: {fileID: 2110797890}
-  stateVillainTurn: {fileID: 983511842}
+  statePlayerTurn: {fileID: 327525885}
+  stateGameSetup: {fileID: 327525886}
+  stateVillainTurn: {fileID: 327525884}
 --- !u!4 &327525883
 Transform:
   m_ObjectHideFlags: 0
@@ -1289,6 +1292,52 @@ Transform:
   - {fileID: 983511843}
   m_Father: {fileID: 1205317121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &327525884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327525881}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4646704927ce15e45bfff3e85e614bf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 797940999}
+  phaseText: {fileID: 1411127244}
+  phaseName: Villain Turn
+--- !u!114 &327525885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327525881}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2d05e3293c95845868c97ae35bb672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 797940999}
+  phaseText: {fileID: 1411127244}
+  phaseName: Player's Turn
+--- !u!114 &327525886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327525881}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e8a7cb0bd573944a4b30c746401ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 797940999}
+  titleScreen: {fileID: 1288504521}
+  startingPlayerDeck: {fileID: 11400000, guid: c6ba92cff21d7b748889855016180316, type: 2}
+  shieldOfficerStartingDeck: {fileID: 11400000, guid: 014eb133aabcde640953a46def8870cb, type: 2}
 --- !u!1001 &349922466
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3389,6 +3438,16 @@ MonoBehaviour:
   specialAbilities: {fileID: 0}
   lastCardPlayed: {fileID: 0}
   escapedVillains: []
+  boardZone: {fileID: 354371404}
+  boardZoneRaycastBlocker: {fileID: 118247250}
+  boardZoneUnfocusedPosition: {x: 0, y: 4.17, z: 12.62}
+  boardZoneFocusedPosition: {x: 0, y: 0, z: 0}
+  boardZoneFocused: 0
+  playerZone: {fileID: 748789677}
+  playerZoneRaycastBlocker: {fileID: 894025062}
+  playerZoneUnfocusedPosition: {x: 0, y: -5.4, z: 2.03}
+  playerZoneFocusedPosition: {x: 0, y: -0.75, z: 2.03}
+  playerZoneFocused: 1
 --- !u!114 &797941000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3401,6 +3460,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432771959864dd64e97d510853a5cac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickAction:
+    m_Name: Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 7e8b6a23-a222-4e82-aa5d-573483a2a76c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &811243174
 GameObject:
   m_ObjectHideFlags: 0
@@ -4195,12 +4263,6 @@ MonoBehaviour:
   playerResourcesText: {fileID: 71961464}
   playerAttacksText: {fileID: 695883301}
   toggleViewButtonText: {fileID: 2093784826}
-  boardZone: {fileID: 1417517598}
-  boardZoneHiddenPosition: {x: 0, y: 8.99, z: 11.97}
-  boardZoneRaycastBlocker: {fileID: 118247250}
-  playerZone: {fileID: 748789677}
-  playerZoneHiddenPosition: {x: 0, y: -7.66, z: -0.37}
-  playerZoneRaycastBlocker: {fileID: 894025062}
   uiNewStateAnimation: {fileID: 228477226}
   useCardButton: {fileID: 815747743}
   useCardButtonText: {fileID: 1629097032}
@@ -5613,7 +5675,8 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.82
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1723285402324235269, guid: d22e1c8acb203ae498cb6b125ed02cb3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

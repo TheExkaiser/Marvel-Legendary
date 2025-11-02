@@ -25,12 +25,14 @@ public class StateVillainState : MonoBehaviour
     {
         phaseText.text = phaseName;
         uiManager.uiNewStateAnimation.PlayAnimation(phaseName);
-        EventManager.OnNewStateAnimationEnd += StateLogic;
+        uiManager.uiNewStateAnimation.OnNewStateAnimationEnd += gameManager.FocusBoard;
+        gameManager.OnBoardFocused += StateLogic;
     }
 
     private void OnDisable()
     {
-        EventManager.OnNewStateAnimationEnd -= StateLogic;
+        uiManager.uiNewStateAnimation.OnNewStateAnimationEnd -= gameManager.FocusBoard;
+        gameManager.OnBoardFocused -= StateLogic;
     }
 
     private void StateLogic()

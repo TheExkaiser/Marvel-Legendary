@@ -16,7 +16,7 @@ public class StateGameSetup : MonoBehaviour
     HQManager hQManager;
     StateManager stateManager;
 
-    private void Start()
+    private void Awake()
     {
         player = gameManager.player;
         hQManager = gameManager.hQManager;
@@ -26,22 +26,15 @@ public class StateGameSetup : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnStartGame += StartGame;
-    }
-
-    private void OnDisable()
-    {
-        EventManager.OnStartGame -= StartGame;
-    }
-
-    public void StartGame()
-    {
         CreateShieldOfficerStartingDeck();
         hQManager.PopulateHQSlots();
         CreateStartingPlayerDeck();
         player.DrawNewHand();
         titleScreen.SetActive(false);
-        StartCoroutine(ToggleViewDelay());
+    }
+
+    private void OnDisable()
+    {
     }
 
     public void CreateStartingPlayerDeck()
@@ -60,14 +53,6 @@ public class StateGameSetup : MonoBehaviour
         {
             hQManager.shieldOfficerDeckList.Add(shieldOfficerStartingDeck.cards[i]);
         }
-    }
-
-    IEnumerator ToggleViewDelay() 
-    {
-        yield return new WaitForSeconds(1f);
-        uiManager.ToggleView();
-        stateManager.ChangeState(StateManager.State.VillainTurn);
-
     }
 }
 

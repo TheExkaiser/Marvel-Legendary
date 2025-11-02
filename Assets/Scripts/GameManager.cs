@@ -5,6 +5,8 @@ using System.Linq;
 using DG.Tweening;
 using static UnityEngine.GraphicsBuffer;
 using static Card;
+using System;
+using JetBrains.Annotations;
 
 
 public class GameManager : MonoBehaviour
@@ -20,8 +22,30 @@ public class GameManager : MonoBehaviour
     public SpecialAbilities specialAbilities;
     [HideInInspector] public GameObject lastCardPlayed;
     public List<CardSO> escapedVillains;
+    [Header("")]
+
+    [Header("Focus View")]
+    [SerializeField] Transform boardZone;
+    [SerializeField] GameObject boardZoneRaycastBlocker;
+    [SerializeField] Vector3 boardZoneUnfocusedPosition;
+    [SerializeField] Vector3 boardZoneFocusedPosition;
+    public bool boardZoneFocused;
+    public event Action OnBoardFocused;
+
+    [SerializeField] Transform playerZone;
+    [SerializeField] GameObject playerZoneRaycastBlocker;
+    [SerializeField] Vector3 playerZoneUnfocusedPosition;
+    [SerializeField] Vector3 playerZoneFocusedPosition;
+    public bool playerZoneFocused;
+    public event Action OnPlayerFocused;
+    [Header("")]
+
 
     Card selectedCard;
+
+    private void Awake()
+    {
+    }
 
     public void Shuffle(List<CardSO> deck)
     {
@@ -29,7 +53,7 @@ public class GameManager : MonoBehaviour
         for (int t = 0; t < deck.Count; t++)
         {
             CardSO tmp = deck[t];
-            int r = Random.Range(t, deck.Count);
+            int r = UnityEngine.Random.Range(t, deck.Count);
             deck[t] = deck[r];
             deck[r] = tmp;
         }
@@ -101,6 +125,42 @@ public class GameManager : MonoBehaviour
             }
 
         }
+    }
+
+    public void FocusBoard()
+    {
+        boardZoneRaycastBlocker.gameObject.SetActive(false);
+        UnFocusPlayer();
+        boardZone.DOMove(boardZoneFocusedPosition, 1f).OnComplete(()=>
+            {
+                boardZoneFocused = true;
+                OnBoardFocused?.Invoke(); 
+            });
+    }
+
+    public void UnFocusBoard()
+    {
+        boardZoneRaycastBlocker.gameObject.SetActive(true);
+        boardZoneFocused = false;
+        boardZone.DOMove(boardZoneUnfocusedPosition, 1f);
+    }
+
+    public void FocusPlayer()
+    {
+        playerZoneRaycastBlocker.gameObject.SetActive(false);
+        UnFocusBoard();
+        playerZone.DOMove(playerZoneFocusedPosition, 1f).OnComplete(() => 
+            {
+                playerZoneFocused = true;
+                OnPlayerFocused?.Invoke(); 
+            });
+    }
+
+    public void UnFocusPlayer()
+    {
+        playerZoneRaycastBlocker.gameObject.SetActive(true);
+        playerZoneFocused = false;
+        playerZone.DOMove(playerZoneUnfocusedPosition, 1f);
     }
 
     public void UseCard()

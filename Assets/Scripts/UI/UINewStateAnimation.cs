@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 
 public class UINewStateAnimation : MonoBehaviour
@@ -18,6 +19,8 @@ public class UINewStateAnimation : MonoBehaviour
     RectTransform textTransform;
     TextMeshProUGUI text;
     float textTransformX;
+
+    public event Action OnNewStateAnimationEnd;
 
     private void Start()
     {
@@ -35,7 +38,7 @@ public class UINewStateAnimation : MonoBehaviour
         seq.AppendInterval(textStayDuration);
         seq.Append(textTransform.DOAnchorPos(new Vector2(-textTransformX, textTransform.anchoredPosition.y), textMoveDuration).SetEase(Ease.OutQuad));
         seq.Append(animationRectangle.DOScaleY(0, rectangleDuration));
-        seq.OnComplete(() => { EventManager.NewStateAnimationEnd(); textTransform.anchoredPosition = new Vector2(textTransformX, textTransform.anchoredPosition.y); });     
+        seq.OnComplete(() => { OnNewStateAnimationEnd?.Invoke(); textTransform.anchoredPosition = new Vector2(textTransformX, textTransform.anchoredPosition.y); });     
     }
 
 

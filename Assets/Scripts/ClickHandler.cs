@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class ClickHandler : MonoBehaviour
 {
-    InputAction clickAction;
+    public InputAction clickAction;
     Card selectedCard;
     Player player;
 
