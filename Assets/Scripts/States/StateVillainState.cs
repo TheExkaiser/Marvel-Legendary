@@ -8,6 +8,8 @@ public class StateVillainState : MonoBehaviour
 {
     [SerializeField] GameManager gameManager;
     [SerializeField] TextMeshProUGUI phaseText;
+    [SerializeField] float delayBeforeDrawingVillainCard;
+    [SerializeField] float delayBeforeEndOfPhase;
     public string phaseName;
     StateManager stateManager;
     UIManager uiManager;
@@ -35,9 +37,24 @@ public class StateVillainState : MonoBehaviour
         gameManager.OnBoardFocused -= StateLogic;
     }
 
+
+
     private void StateLogic()
     {
+        StartCoroutine(StateLogicCoroutine());
+    }
+
+    IEnumerator StateLogicCoroutine()
+    {
+        yield return new WaitForSeconds(delayBeforeDrawingVillainCard);
         gameManager.villainManager.DrawVillainCard();
+        StartCoroutine(DelayBeforeEndOfPhase());
+    }
+
+    IEnumerator DelayBeforeEndOfPhase()
+    {
+        yield return new WaitForSeconds(delayBeforeEndOfPhase);
         stateManager.ChangeState(StateManager.State.PlayerTurn);
+
     }
 }

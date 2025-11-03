@@ -1394,6 +1394,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 797940999}
   phaseText: {fileID: 1411127244}
+  delayBeforeDrawingVillainCard: 0.6
+  delayBeforeEndOfPhase: 1.2
   phaseName: Villain Turn
 --- !u!114 &327525885
 MonoBehaviour:
@@ -4649,6 +4651,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 797940999}
   phaseText: {fileID: 1411127244}
+  delayBeforeDrawingVillainCard: 0
+  delayBeforeEndOfPhase: 0
   phaseName: Villain Turn
 --- !u!1001 &1015328145
 PrefabInstance:
