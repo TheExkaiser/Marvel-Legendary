@@ -25,6 +25,10 @@ public class UIManager : MonoBehaviour
     public Button useCardButton;
     public TextMeshProUGUI useCardButtonText;
 
+    [Header("Card Info Panel")]
+    [SerializeField] GameObject cardInfoPanel;
+    [SerializeField] Image cardInfoImage;
+
     private void Start()
     {
         player = gameManager.player;
@@ -113,6 +117,17 @@ public class UIManager : MonoBehaviour
     public void DisableUseCardButton(Card card)
     {
         DisableUseCardButton();
+    }
+
+    public void PopulateCardInfoPanel(CardSO cardSO)
+    {
+        cardInfoImage.sprite = cardSO.image;
+        cardInfoPanel.SetActive(true);
+    }
+
+    public void CloseCardInfoPanel()
+    {
+        cardInfoPanel.SetActive(false);
     }
 
 }

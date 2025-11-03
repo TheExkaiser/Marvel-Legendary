@@ -6,21 +6,38 @@ using UnityEngine.InputSystem;
 
 public class ClickHandler : MonoBehaviour
 {
-    public InputAction clickAction;
+    public InputActionAsset controlsInputAsset;
+    InputAction clickAction;
+    InputAction holdAction;
+    public InputActionMap cardSelectingActionMap;
     Card selectedCard;
     Player player;
 
     private void Awake()
     {
         player = gameObject.GetComponent<GameManager>().player;
-        clickAction = new InputAction(type: InputActionType.Button, binding: "<Pointer>/press");
-        clickAction.performed += OnClick;
+        cardSelectingActionMap = controlsInputAsset.FindActionMap("CardSelecting");
+
+        clickAction = cardSelectingActionMap.FindAction("Click");
+        holdAction = cardSelectingActionMap.FindAction("Hold");
+
+
     }
-    private void OnEnable() => clickAction.Enable();
-    private void OnDisable() => clickAction.Disable();
+    private void OnEnable()
+    {
+        clickAction.canceled += OnClick;
+        holdAction.performed += OnHold;
+    }
+    private void OnDisable()
+    {
+        clickAction.canceled -= OnClick;
+        holdAction.performed -= OnHold;
+    }
 
     private void OnClick(InputAction.CallbackContext ctx)
     {
+
+        Debug.Log("Click OK");
         selectedCard = player.selectedCard;
 
         if (Camera.main == null || Pointer.current == null)
@@ -45,6 +62,21 @@ public class ClickHandler : MonoBehaviour
         }
         
         
+    }
+
+    private void OnHold(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("Hold OK");
+
+        Ray ray = Camera.main.ScreenPointToRay(Pointer.current.position.ReadValue());
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+        if (hit)
+        {
+            IClickable clickable = hit.collider.GetComponent<IClickable>();
+            // Debug.Log(hit.collider.name);
+            clickable?.OnHold();
+
+        }
     }
         
         

@@ -15,7 +15,6 @@ public class StateManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeState(State.GameSetup);
     }
 
     public void ChangeState(State state)

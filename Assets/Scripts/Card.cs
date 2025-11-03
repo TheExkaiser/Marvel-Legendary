@@ -97,6 +97,12 @@ public class Card : MonoBehaviour, IClickable
         }
         
     }
+
+    public void OnHold()
+    {
+        gameManager.uiManager.PopulateCardInfoPanel(cardData);
+    }
+
     void SelectCard()
     {
         if (selectable)

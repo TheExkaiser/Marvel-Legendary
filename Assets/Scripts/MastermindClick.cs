@@ -17,4 +17,9 @@ public class MastermindClick : MonoBehaviour, IClickable
     {
         mastermindManager.clickOnMastermind();
     }
+
+    public void OnHold()
+    {
+
+    }
 }

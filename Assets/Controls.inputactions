@@ -1,16 +1,16 @@
 {
     "version": 1,
-    "name": "New Controls",
+    "name": "Controls",
     "maps": [
         {
-            "name": "TouchMouse",
+            "name": "CardSelecting",
             "id": "b49e4387-8c0f-4f35-83a3-e8acd6a42bf4",
             "actions": [
                 {
                     "name": "Click",
                     "type": "Button",
                     "id": "79975370-36af-4ea6-a944-5b3392e2dc43",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -19,35 +19,13 @@
                     "name": "Hold",
                     "type": "Button",
                     "id": "9b5b6137-28c0-40d8-8021-76966206556d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "dedc8f95-ffdb-4482-9e7c-dc9ba45c89a7",
-                    "path": "<Touchscreen>/Press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0b3cac71-a620-4b23-b880-ec87133b6924",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "98b20ceb-83bd-4f78-bd9e-576cf3bd4b25",
@@ -62,11 +40,33 @@
                 {
                     "name": "",
                     "id": "f9f2a7bf-8cdf-413a-baa5-fbcd63ad6add",
-                    "path": "<Mouse>/press",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "46485b2a-2f0c-42eb-835a-1feb901ba981",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bac9a339-fa83-4c6e-84c9-b22aaf1a1593",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

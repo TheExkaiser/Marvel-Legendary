@@ -5,4 +5,8 @@ using UnityEngine;
 public class RaycastBlocker : MonoBehaviour, IClickable
 {
     public void OnClick() { Debug.Log("raycast block clicked"); }
+    public void OnHold()
+    {
+
+    }
 }
