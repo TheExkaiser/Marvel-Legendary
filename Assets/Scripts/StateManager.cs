@@ -13,8 +13,9 @@ public class StateManager : MonoBehaviour
 
     public enum State {PlayerTurn, GameSetup, VillainTurn};
 
-    private void Start()
+    public void StartGame()
     {
+        ChangeState(State.GameSetup);
     }
 
     public void ChangeState(State state)

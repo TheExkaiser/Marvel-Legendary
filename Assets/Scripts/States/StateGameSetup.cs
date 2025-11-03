@@ -26,11 +26,12 @@ public class StateGameSetup : MonoBehaviour
 
     private void OnEnable()
     {
+        titleScreen.SetActive(false);
         CreateShieldOfficerStartingDeck();
         hQManager.PopulateHQSlots();
         CreateStartingPlayerDeck();
         player.DrawNewHand();
-        titleScreen.SetActive(false);
+        stateManager.ChangeState(StateManager.State.PlayerTurn);
     }
 
     private void OnDisable()

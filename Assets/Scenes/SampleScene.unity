@@ -2151,7 +2151,6 @@ GameObject:
   - component: {fileID: 542707335}
   - component: {fileID: 542707334}
   - component: {fileID: 542707333}
-  - component: {fileID: 542707332}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -2180,19 +2179,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -142}
   m_SizeDelta: {x: 590, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &542707332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 542707330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df7fa077426d80d419d2251fd7a80d7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisButton: {fileID: 542707333}
 --- !u!114 &542707333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2236,7 +2222,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 542707334}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 327525882}
+        m_TargetAssemblyTypeName: StateManager, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &542707334
 MonoBehaviour:
   m_ObjectHideFlags: 0
