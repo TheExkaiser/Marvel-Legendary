@@ -26,7 +26,7 @@ public class Card : MonoBehaviour, IClickable
 
 
     [Header("Other:")]
-    [SerializeField] Color playedColor;
+    public Color playedColor;
     float assignedCardOffsetX;
     float assignedCardOffsetY;
     public List<GameObject> assignedCards;
@@ -89,11 +89,11 @@ public class Card : MonoBehaviour, IClickable
     {
         if (!selected)
         {
-            SelectCard();
+            playerComponent.SelectCard(this);
         }
         else
-        { 
-            DeselectCard();
+        {
+            playerComponent.DeselectCard();
         }
         
     }
@@ -103,35 +103,6 @@ public class Card : MonoBehaviour, IClickable
         gameManager.uiManager.PopulateCardInfoPanel(cardData);
     }
 
-    void SelectCard()
-    {
-        if (selectable)
-        {
-            if (playerComponent.selectedCard != null)
-            {
-                playerComponent.selectedCard.DeselectCard();
-            }
-
-            selectable = false;
-            uiManager.EnableUseCardButton(this);
-            selected = true;
-            playerComponent.selectedCard = this;
-            transform.DOMove(new Vector3(transform.position.x, transform.position.y + selectedMoveDistance, transform.position.z), 0.3f).OnComplete(() => { selectable = true; } );
-        }
-        
-    }
-
-    public void DeselectCard()
-    {
-        if (selectable)
-        {
-            selectable = false;
-            selected = false;
-            playerComponent.selectedCard = null;
-            uiManager.DisableUseCardButton();
-            transform.DOMove(new Vector3(transform.position.x, transform.position.y - selectedMoveDistance, transform.position.z), 0.3f).OnComplete(() => { if (!played) { selectable = true; } else { selectable = false; } });
-        }
-    }
 
     public void PopulateCardPrefab()
     {
@@ -182,37 +153,12 @@ public class Card : MonoBehaviour, IClickable
         victoryPoints = 0;
         gameObject.SetActive(false);
     }
-
-    public void PlayCard()
-    {
-        if (!played)
-        {
-            DeselectCard();
-            EventManager.PlayerAddsAttacks(heroAttacks);
-            EventManager.PlayerAddsResources(heroResources);
-            transform.parent = playedCards;
-            played = true;
-            selectable = false;
-            UpdateSortingLayer();
-            playerHandAutoLayout.UpdateCardsPositions();
-            playedCardsAutoLayout.UpdateCardsPositions();
-            gameManager.lastCardPlayed = gameObject;
-            spriteRenderer.color = playedColor;
-            if (heroSpecialAbilities.Count > 0) 
-            { 
-                for (int i = 0; i < heroSpecialAbilities.Count; i++) 
-                {
-                    heroSpecialAbilities[i].GetComponent<ISpecialAbility>().useAbility();
-                }
-            }
-        }
-    }
     
     public void BuyCard()
     {
         playerComponent.resources -= heroCost;
         EventManager.BuyCard(this);
-        DiscardCard();          
+        playerComponent.DiscardCard(this);          
     }
 
     public void FightCard()
@@ -239,15 +185,7 @@ public class Card : MonoBehaviour, IClickable
     
     }
 
-    public void DiscardCard()
-    {
-        Card cardScript = this;
-        cardScript.played = false;
-        gameObject.transform.parent = null;
-        cardScript.cardLocation = CardLocation.None;
-        playerComponent.discard.Insert(0, cardData);
-        transform.DOMoveX(10f, 0.2f).onComplete = RemovePrefab;
-    }
+    
 
     public void UpdateSortingLayer()
     { 

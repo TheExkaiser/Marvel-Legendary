@@ -36,8 +36,6 @@ public class ClickHandler : MonoBehaviour
 
     private void OnClick(InputAction.CallbackContext ctx)
     {
-
-        Debug.Log("Click OK");
         selectedCard = player.selectedCard;
 
         if (Camera.main == null || Pointer.current == null)
@@ -48,7 +46,7 @@ public class ClickHandler : MonoBehaviour
         if (hit)
         {
             IClickable clickable = hit.collider.GetComponent<IClickable>();
-            // Debug.Log(hit.collider.name);
+            Debug.Log(hit.collider.name);
             clickable?.OnClick();
             
         }
@@ -56,7 +54,7 @@ public class ClickHandler : MonoBehaviour
         {
             if (selectedCard != null)
             {
-                selectedCard.DeselectCard();
+                player.DeselectCard();
             }
             
         }

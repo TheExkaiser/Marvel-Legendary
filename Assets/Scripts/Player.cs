@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements.Experimental;
+using static Card;
 
 public class Player : MonoBehaviour
 {
@@ -27,6 +30,7 @@ public class Player : MonoBehaviour
     public List<CardSO> victoryPool;
 
     Card card;
+    Transform cardTransform;
     int playerHandCardsCount;
     int playedCardsCount;
 
@@ -60,6 +64,86 @@ public class Player : MonoBehaviour
         EventManager.OnEndPlayerTurn -= DrawNewHand;
 
     }
+
+    public void SelectCard(Card card)
+    {
+        if (card.selectable)
+        {
+            if (selectedCard != null)
+            {
+                DeselectCard();
+            }
+
+            cardTransform = card.transform;
+
+            card.selectable = false;
+            uiManager.EnableUseCardButton(card);
+            card.selected = true;
+            selectedCard = card;
+            card.gameObject.transform.DOMove(new Vector3(cardTransform.position.x, cardTransform.position.y + card.selectedMoveDistance, cardTransform.position.z), 0.3f).OnComplete(() => { card.selectable = true; });
+        }
+
+    }
+
+    public void DeselectCard()
+    {
+        if (selectedCard)
+        {
+            cardTransform = selectedCard.transform;
+            selectedCard.selectable = false;
+            selectedCard.selected = false;
+            uiManager.DisableUseCardButton();
+            cardTransform.DOMove(new Vector3(cardTransform.position.x, cardTransform.position.y - selectedCard.selectedMoveDistance, cardTransform.position.z), 0.3f).OnComplete(() =>
+            {
+                if (!selectedCard.played)
+                {
+                    selectedCard.selectable = true;
+                }
+                else
+                {
+                    selectedCard.selectable = false;
+                }
+
+                selectedCard = null;
+
+            });
+        }
+    }
+
+    public void PlayCard()
+    {
+        AddAttacks(selectedCard.heroAttacks);
+        AddResources(selectedCard.heroResources);
+        selectedCard.transform.parent = playedCards;
+        uiManager.DisableUseCardButton();
+
+        selectedCard.played = true;
+        selectedCard.selectable = false;
+        selectedCard.UpdateSortingLayer();
+        playerHand.GetComponent<CardContainerAutoLayout>().UpdateCardsPositions();
+        playedCards.GetComponent<CardContainerAutoLayout>().UpdateCardsPositions();
+        gameManager.lastCardPlayed = gameObject;
+        selectedCard.GetComponent<SpriteRenderer>().color = selectedCard.playedColor;
+        if (selectedCard.heroSpecialAbilities.Count > 0)
+        {
+            for (int i = 0; i < card.heroSpecialAbilities.Count; i++)
+            {
+                selectedCard.heroSpecialAbilities[i].GetComponent<ISpecialAbility>().useAbility();
+            }
+        }
+
+        selectedCard = null;
+    }
+
+    public void DiscardCard(Card card)
+    {
+        card.played = false;
+        card.transform.parent = null;
+        card.cardLocation = CardLocation.None;
+        discard.Insert(0, card.cardData);
+        card.transform.DOMoveX(10f, 0.2f).onComplete = card.RemovePrefab;
+    }
+
     public void DrawCard(int number) 
     {
         if (number > 0)
@@ -81,7 +165,7 @@ public class Player : MonoBehaviour
         for (int i = 0; i < playerHandCardsCount; i++)
         {
             card = playerHand.GetChild(0).GetComponent<Card>();
-            card.DiscardCard();
+            DiscardCard(card);
         }
     }
 
@@ -91,7 +175,7 @@ public class Player : MonoBehaviour
         for (int i = 0; i < playedCardsCount; i++)
         {
             card = playedCards.GetChild(0).GetComponent<Card>();
-            card.DiscardCard();
+            DiscardCard(card); ;
         }
     }
 

@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
         {
             if (selectedCard.cardLocation == Card.CardLocation.PlayerHand)
             {
-                selectedCard.PlayCard();
+                player.PlayCard();
             }
             else if (selectedCard.cardLocation == Card.CardLocation.HQ)
             {
