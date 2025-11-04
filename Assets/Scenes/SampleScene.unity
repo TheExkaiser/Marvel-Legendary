@@ -1125,7 +1125,6 @@ GameObject:
   - component: {fileID: 279260714}
   - component: {fileID: 279260713}
   - component: {fileID: 279260712}
-  - component: {fileID: 279260715}
   m_Layer: 5
   m_Name: ButtonEndTurn
   m_TagString: Untagged
@@ -1198,13 +1197,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: df1b9b59786f0ae42bf15cb882ed0eec, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 327525885}
+        m_TargetAssemblyTypeName: StatePlayersTurn, Assembly-CSharp
+        m_MethodName: EndTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1248,18 +1247,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279260710}
   m_CullTransparentMesh: 1
---- !u!114 &279260715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279260710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d90a87a9d31d49448ab79a06ab049841, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &288561308 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1241630936387414197, guid: 7aa351f5107060246a69afa5b50ac94e, type: 3}

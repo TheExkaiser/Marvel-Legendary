@@ -18,7 +18,6 @@ public class StatePlayersTurn : MonoBehaviour
         player = gameManager.player;
         uiManager = gameManager.uiManager;
         phaseText.text = phaseName;
-        EventManager.OnEndPlayerTurn += EndTurn;
     }
 
     // Start is called before the first frame update
@@ -36,6 +35,17 @@ public class StatePlayersTurn : MonoBehaviour
 
     public void EndTurn()
     {
+        player.DiscardHand();
+        player.DiscardPlayedCards();
+        player.ResetAttacks();
+        player.ResetResources();
+        player.DrawNewHand();
+        player.OnDrawNewHandEnd += EndTurnEnd;
+    }
+
+    public void EndTurnEnd()
+    {
         stateManager.ChangeState(StateManager.State.VillainTurn);
+        player.OnDrawNewHandEnd -= EndTurnEnd;
     }
 }

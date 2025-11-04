@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
 
     Card selectedCard;
 
+    public event Action OnLastCardDrawn;
+
     private void Awake()
     {
     }
@@ -122,6 +124,11 @@ public class GameManager : MonoBehaviour
 
                 
                 yield return new WaitForSeconds(0.2f);
+                if (i == numberOfCards - 1)
+                {
+                    OnLastCardDrawn?.Invoke();
+                }
+
             }
 
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -34,6 +35,10 @@ public class Player : MonoBehaviour
     int playerHandCardsCount;
     int playedCardsCount;
 
+    public event Action OnDrawNewHandEnd;
+    public event Action OnAddsAttacks;
+    public event Action OnAddsRecources;
+
     private void Start()
     {
         cardsToDraw = defaultCardsToDraw;
@@ -42,27 +47,10 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnPlayerDrewCardsFromDeck += DrawCard;
-        EventManager.OnPlayerAddsAttacks += AddAttacks;
-        EventManager.OnPlayerAddsResources += AddResources;
-        EventManager.OnEndPlayerTurn += DiscardHand;
-        EventManager.OnEndPlayerTurn += DiscardPlayedCards;
-        EventManager.OnEndPlayerTurn += ResetAttacks;
-        EventManager.OnEndPlayerTurn += ResetResources;
-        EventManager.OnEndPlayerTurn += DrawNewHand;
     }
 
     private void OnDisable()
     {
-        EventManager.OnPlayerDrewCardsFromDeck -= DrawCard;
-        EventManager.OnPlayerAddsAttacks -= AddAttacks;
-        EventManager.OnPlayerAddsResources -= AddResources;
-        EventManager.OnEndPlayerTurn -= DiscardHand;
-        EventManager.OnEndPlayerTurn -= DiscardPlayedCards;
-        EventManager.OnEndPlayerTurn -= ResetAttacks;
-        EventManager.OnEndPlayerTurn -= ResetResources;
-        EventManager.OnEndPlayerTurn -= DrawNewHand;
-
     }
 
     public void SelectCard(Card card)
@@ -112,11 +100,14 @@ public class Player : MonoBehaviour
 
     public void PlayCard()
     {
-        AddAttacks(selectedCard.heroAttacks);
-        AddResources(selectedCard.heroResources);
         selectedCard.transform.parent = playedCards;
         uiManager.DisableUseCardButton();
 
+        AddAttacks(selectedCard.heroAttacks);
+        OnAddsAttacks?.Invoke();
+        AddResources(selectedCard.heroResources);
+        OnAddsRecources?.Invoke();
+        
         selectedCard.played = true;
         selectedCard.selectable = false;
         selectedCard.UpdateSortingLayer();
@@ -155,8 +146,15 @@ public class Player : MonoBehaviour
 
     public void DrawNewHand()
     {
-        EventManager.PlayerDrawCardsFromDeck(cardsToDraw);
-        EventManager.PlayerDrawNewHand();
+        gameManager.OnLastCardDrawn += OnDrawNewHandEndInvoke;
+        DrawCard(cardsToDraw);
+
+    }
+
+    public void OnDrawNewHandEndInvoke()
+    {
+        OnDrawNewHandEnd?.Invoke();
+        gameManager.OnLastCardDrawn -= OnDrawNewHandEndInvoke;
     }
 
     public void DiscardHand()
