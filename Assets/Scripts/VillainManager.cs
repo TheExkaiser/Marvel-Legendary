@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -13,8 +14,14 @@ public class VillainManager : MonoBehaviour
     Transform villainDeckTransform;
     Transform cardTransform;
     List<Transform> villainsToMove;
-    
 
+
+    public event Action OnVillainCardDrawn;
+    public event Action OnVillainEntersCity;
+    public event Action OnVillainCatchesBystander;
+    public event Action OnMastermindCatchesBystander;
+    public event Action OnVillainEscape;
+    
     private void Awake()
     {
         villainDeckTransform = villainDeck.transform;
@@ -59,7 +66,8 @@ public class VillainManager : MonoBehaviour
                     gameManager.DrawFromDeck(villainDeckTransform, villainDeckContents, citySpaces[0], 1, Card.CardLocation.City);
                 }
             }
-            
+
+            OnVillainCardDrawn.Invoke();
             yield return new WaitForSeconds(1f);
         }
         while (drawAnotherCard);     
@@ -107,7 +115,7 @@ public class VillainManager : MonoBehaviour
     {
         gameManager.escapedVillains.Add(cardScript.cardData);
         cardTransform = cardScript.gameObject.transform;
-        cardTransform.DOMove(new Vector3(cardTransform.position.x-4f, cardTransform.position.y+10f, cardTransform.position.z), 0.5f).OnComplete(() => { cardScript.RemovePrefab(); });
+        cardTransform.DOMove(new Vector3(cardTransform.position.x-4f, cardTransform.position.y+10f, cardTransform.position.z), 0.5f).OnComplete(() => { cardScript.RemovePrefab(); OnVillainEscape?.Invoke(); });
         
     }
 
@@ -117,10 +125,12 @@ public class VillainManager : MonoBehaviour
         gameManager.DrawFromDeck(villainDeckTransform, villainDeckContents, villainDeckTransform, 1, Card.CardLocation.City);
         GameObject bystanderCard = villainDeckTransform.GetChild(0).gameObject;
         citySpace.GetChild(0).gameObject.GetComponent<Card>().AssignCard(bystanderCard);
+        OnVillainCatchesBystander.Invoke();
     }
 
     void MastermindCatchesBystander()
     {
         Debug.Log("Mastermind catches bystander");
+        OnMastermindCatchesBystander.Invoke();
     }
 }
