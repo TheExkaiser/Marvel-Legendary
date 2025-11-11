@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class ClickHandler : MonoBehaviour
 {
     public InputActionAsset controlsInputAsset;
+    public bool interactionAllowed;
     InputAction clickAction;
     InputAction holdAction;
     public InputActionMap cardSelectingActionMap;
@@ -20,8 +21,6 @@ public class ClickHandler : MonoBehaviour
 
         clickAction = cardSelectingActionMap.FindAction("Click");
         holdAction = cardSelectingActionMap.FindAction("Hold");
-
-
     }
     private void OnEnable()
     {

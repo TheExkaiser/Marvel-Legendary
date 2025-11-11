@@ -102,12 +102,7 @@ public class Player : MonoBehaviour
     {
         selectedCard.transform.parent = playedCards;
         uiManager.DisableUseCardButton();
-
-        AddAttacks(selectedCard.heroAttacks);
-        OnAddsAttacks?.Invoke();
-        AddResources(selectedCard.heroResources);
-        OnAddsRecources?.Invoke();
-        
+  
         selectedCard.played = true;
         selectedCard.selectable = false;
         selectedCard.UpdateSortingLayer();
@@ -115,13 +110,13 @@ public class Player : MonoBehaviour
         playedCards.GetComponent<CardContainerAutoLayout>().UpdateCardsPositions();
         gameManager.lastCardPlayed = gameObject;
         selectedCard.GetComponent<SpriteRenderer>().color = selectedCard.playedColor;
-        if (selectedCard.heroSpecialAbilities.Count > 0)
-        {
-            for (int i = 0; i < card.heroSpecialAbilities.Count; i++)
-            {
-                selectedCard.heroSpecialAbilities[i].GetComponent<ISpecialAbility>().useAbility();
-            }
-        }
+
+        AddAttacks(selectedCard.heroAttacks);
+        OnAddsAttacks?.Invoke();
+        AddResources(selectedCard.heroResources);
+        OnAddsRecources?.Invoke();
+        if (selectedCard.heroSpecialAbility) selectedCard.heroSpecialAbility.useAbility();
+
 
         selectedCard = null;
     }

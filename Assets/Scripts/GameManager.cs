@@ -42,11 +42,15 @@ public class GameManager : MonoBehaviour
 
 
     Card selectedCard;
+    ClickHandler clickHandler;
 
     public event Action OnLastCardDrawn;
 
     private void Awake()
     {
+        clickHandler = GetComponent<ClickHandler>();
+        EnableInteractions();
+        
     }
 
     public void Shuffle(List<CardSO> deck)
@@ -132,6 +136,16 @@ public class GameManager : MonoBehaviour
             }
 
         }
+    }
+
+    public void EnableInteractions()
+    {
+        clickHandler.interactionAllowed = true;
+    }
+
+    public void DisableInteractions() 
+    {
+        clickHandler.interactionAllowed = false;
     }
 
     public void FocusBoard()

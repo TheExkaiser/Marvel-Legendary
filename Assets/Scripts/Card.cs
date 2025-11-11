@@ -33,8 +33,8 @@ public class Card : MonoBehaviour, IClickable
 
 
     [Header("Stats:")]
-    public bool played;//DOCELOWO PRIVATE
-    public bool selected;//DOCELOWO PRIVATE
+    public bool played;//DOCELOWO NIEWIDOCZNE (MO¯E PRIVATE)
+    public bool selected;//DOCELOWO NIEWIDOCZNE (MO¯E PRIVATE)
     public bool selectable = true;
     public float selectedMoveDistance;
 
@@ -43,7 +43,7 @@ public class Card : MonoBehaviour, IClickable
     public int heroAttacks;
     public int heroResources;
     public int heroCardsToDraw;
-    public List<GameObject> heroSpecialAbilities;
+    public HeroSpecialAbility heroSpecialAbility;
 
     [Header("Villain Stats:")]
     public int victoryPoints;
@@ -52,6 +52,7 @@ public class Card : MonoBehaviour, IClickable
     public bool villainHasFightAbility;
     public bool villainHasEscapeAbility;
     public bool HasVillainUniqueAbility;
+    public VillainSpecialAbility villainSpecialAbility;
 
 
 
@@ -114,17 +115,14 @@ public class Card : MonoBehaviour, IClickable
             heroResources = cardData.heroRecruitPoints;
             heroCardsToDraw = cardData.heroCardsToDraw;
             villainAttacks = cardData.villainAttacks;
-            villainHasFightAbility = cardData.hasAmbushAbility;
-            villainHasEscapeAbility = cardData.hasEscapeAbility;
-            villainHasFightAbility = cardData.hasFightAbility;
-            HasVillainUniqueAbility = cardData.hasVillainUniqueAbility;
+            villainHasFightAbility = cardData.villainHasAmbushAbility;
+            villainHasEscapeAbility = cardData.villainHasEscapeAbility;
+            villainHasFightAbility = cardData.villainHasFightAbility;
+            HasVillainUniqueAbility = cardData.villainHasUniqueAbility;
             victoryPoints = cardData.victoryPoints;
 
-            for (int i = 0; i < cardData.heroSpecialAbilities.Count; i++) 
-            {
-                heroSpecialAbilities.Add(cardData.heroSpecialAbilities[i]);
-            }
-            
+            if (cardData.heroSpecialAbility) heroSpecialAbility = cardData.heroSpecialAbility.GetComponent<HeroSpecialAbility>();
+            if (cardData.villainSpecialAbility) villainSpecialAbility = cardData.heroSpecialAbility.GetComponent<VillainSpecialAbility>();
         }
     }
 
@@ -149,7 +147,7 @@ public class Card : MonoBehaviour, IClickable
         villainHasEscapeAbility = false;
         villainHasFightAbility = false;
         HasVillainUniqueAbility = false;
-        heroSpecialAbilities.Clear();
+        heroSpecialAbility = null;
         victoryPoints = 0;
         gameObject.SetActive(false);
     }

@@ -26,17 +26,18 @@ public class CardSO : ScriptableObject
     public bool heroAttackPlus;
     public int heroCardsToDraw;
     public string specialAbilityText;
-    public List<GameObject> heroSpecialAbilities;
+    public GameObject heroSpecialAbility;
     [Header("")]
 
     [Header("Villain Stats:")]
     public string villainGroup;
     public int victoryPoints;
     public int villainAttacks;
-    public bool hasAmbushAbility;
-    public bool hasFightAbility;
-    public bool hasEscapeAbility;
-    public bool hasVillainUniqueAbility;
+    public bool villainHasAmbushAbility;
+    public bool villainHasFightAbility;
+    public bool villainHasEscapeAbility;
+    public bool villainHasUniqueAbility;
+    public GameObject villainSpecialAbility;
 
     public enum CardType { None,Hero,Villain,Bystander,Wound,SchemeTwist,MasterStrike,Mastermind, MastermindTactic }
     public enum HeroTeam { Shield, Avengers, XMen, SpiderFriends }
