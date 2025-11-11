@@ -34,7 +34,7 @@ public class Card : MonoBehaviour, IClickable
 
     [Header("Stats:")]
     public bool played;//DOCELOWO NIEWIDOCZNE (MO¯E PRIVATE)
-    public bool selected;//DOCELOWO NIEWIDOCZNE (MO¯E PRIVATE)
+    //public bool selected;//DOCELOWO NIEWIDOCZNE (MO¯E PRIVATE)
     public bool selectable = true;
     public float selectedMoveDistance;
 
@@ -88,17 +88,7 @@ public class Card : MonoBehaviour, IClickable
 
     public void OnClick()
     {
-        if (!selected)
-        {
-            playerComponent.DeselectCard();
-            
             playerComponent.SelectCard(this);
-        }
-        else
-        {
-            playerComponent.DeselectCard();
-        }
-        
     }
 
     public void OnHold()

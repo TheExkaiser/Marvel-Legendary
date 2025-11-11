@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     Transform cardTransform;
     int playerHandCardsCount;
     int playedCardsCount;
-    Card previouslySelectedCard;
+    [SerializeField] Card previouslySelectedCard; //DOCELOWO UKRYTE
 
     public event Action OnDrawNewHandEnd;
     public event Action OnAddsAttacks;
@@ -60,16 +60,18 @@ public class Player : MonoBehaviour
         {
             gameManager.DisableInteractions();
 
+            
             DeselectCard();
 
-            cardTransform = card.transform;
+            
 
+            cardTransform = card.transform;
+            
             card.selectable = false;
             uiManager.EnableUseCardButton(card);
-            selectedCard = card;
             card.gameObject.transform.DOMove(new Vector3(cardTransform.position.x, cardTransform.position.y + card.selectedMoveDistance, cardTransform.position.z), 0.3f).OnComplete(() => 
-            { 
-                card.selected = true;
+            {
+                selectedCard = card;
                 gameManager.EnableInteractions(); 
             });
         }
@@ -80,24 +82,14 @@ public class Player : MonoBehaviour
     {
         if (selectedCard)
         {
+            Debug.Log("Deselect start");
             gameManager.DisableInteractions();
-            selectedCard.selected = false;
             previouslySelectedCard = selectedCard;
             cardTransform = previouslySelectedCard.transform;
-            previouslySelectedCard.selectable = false;
-            previouslySelectedCard.selected = false;
+            previouslySelectedCard.selectable = true;
             uiManager.DisableUseCardButton();
             cardTransform.DOMove(new Vector3(cardTransform.position.x, cardTransform.position.y - previouslySelectedCard.selectedMoveDistance, cardTransform.position.z), 0.3f).OnComplete(() =>
             {
-                if (!previouslySelectedCard.played)
-                {
-                    previouslySelectedCard.selectable = true;
-                }
-                else
-                {
-                    previouslySelectedCard.selectable = false;
-                }
-
                 previouslySelectedCard = null;
                 selectedCard = null;
 
