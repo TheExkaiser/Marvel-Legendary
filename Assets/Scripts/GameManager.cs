@@ -16,10 +16,10 @@ public class GameManager : MonoBehaviour
     public VillainManager villainManager;
     public MastermindManager mastermindManager;
     public StateManager stateManager;
+    public SchemeManager schemeManager;
     public Transform cardsPool;
     public Transform cardSlotsPool;
     public Player player;
-    public SpecialAbilities specialAbilities;
     [HideInInspector] public GameObject lastCardPlayed;
     public List<CardSO> escapedVillains;
     [Header("")]
@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     Card selectedCard;
     ClickHandler clickHandler;
+    SchemeAbilities schemeAbilities;
 
     public event Action OnLastCardDrawn;
 
@@ -51,6 +52,13 @@ public class GameManager : MonoBehaviour
         clickHandler = GetComponent<ClickHandler>();
         EnableInteractions();
         
+
+
+    }
+
+    private void Update()
+    {
+        CheckLoseCondition();
     }
 
     public void Shuffle(List<CardSO> deck)
@@ -216,6 +224,15 @@ public class GameManager : MonoBehaviour
 
         }
 
+    }
+
+    public void CheckLoseCondition()
+    {
+        if (schemeManager.scheme.schemeAbilities.GetComponent<SchemeAbilities>().EvilWinsCondition(this))
+        {
+            DisableInteractions();
+            Debug.Log("==============GAME LOST==============");
+        }
     }
 
     public void GameWon()

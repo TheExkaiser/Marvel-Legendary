@@ -14,13 +14,14 @@ public class VillainManager : MonoBehaviour
     Transform villainDeckTransform;
     Transform cardTransform;
     List<Transform> villainsToMove;
-
+    SchemeManager schemeManager;
 
     public event Action OnVillainCardDrawn;
     public event Action OnVillainEntersCity;
     public event Action OnVillainCatchesBystander;
     public event Action OnMastermindCatchesBystander;
     public event Action OnVillainEscape;
+    public event Action OnSchemeTwistDrawn;
     
     private void Awake()
     {
@@ -52,6 +53,12 @@ public class VillainManager : MonoBehaviour
                         break;
                     }
                 }
+            }
+            else if (villainDeckContents[0].cardType == CardSO.CardType.SchemeTwist) 
+            {
+                OnSchemeTwistDrawn?.Invoke();
+                schemeManager.schemeTwistsPlayed++;
+                Debug.Log("Scheme Twist Drawn");
             }
             else
             {
