@@ -1131,7 +1131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &279260711
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7310,7 +7310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2101415715
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8633,6 +8633,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 797940999}
     - target: {fileID: 1165229320870420701, guid: 2ed81284311ecf347ae1a0310d2f22a1, type: 3}
+      propertyPath: buttonEndTurn
+      value: 
+      objectReference: {fileID: 279260710}
+    - target: {fileID: 1165229320870420701, guid: 2ed81284311ecf347ae1a0310d2f22a1, type: 3}
       propertyPath: cardInfoImage
       value: 
       objectReference: {fileID: 2143552652}
@@ -8644,6 +8648,10 @@ PrefabInstance:
       propertyPath: useCardButton
       value: 
       objectReference: {fileID: 815747743}
+    - target: {fileID: 1165229320870420701, guid: 2ed81284311ecf347ae1a0310d2f22a1, type: 3}
+      propertyPath: buttonToggleView
+      value: 
+      objectReference: {fileID: 2101415714}
     - target: {fileID: 1165229320870420701, guid: 2ed81284311ecf347ae1a0310d2f22a1, type: 3}
       propertyPath: playerAttacksText
       value: 

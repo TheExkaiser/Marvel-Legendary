@@ -141,6 +141,7 @@ public class GameManager : MonoBehaviour
     public void EnableInteractions()
     {
         clickHandler.enabled = true;
+
     }
 
     public void DisableInteractions() 
@@ -150,38 +151,44 @@ public class GameManager : MonoBehaviour
 
     public void FocusBoard()
     {
+        DisableInteractions();
         boardZoneRaycastBlocker.gameObject.SetActive(false);
         UnFocusPlayer();
         boardZone.DOMove(boardZoneFocusedPosition, 1f).OnComplete(()=>
             {
                 boardZoneFocused = true;
-                OnBoardFocused?.Invoke(); 
+                OnBoardFocused?.Invoke();
+                EnableInteractions();
             });
     }
 
     public void UnFocusBoard()
     {
+        DisableInteractions();
         boardZoneRaycastBlocker.gameObject.SetActive(true);
         boardZoneFocused = false;
-        boardZone.DOMove(boardZoneUnfocusedPosition, 1f);
+        boardZone.DOMove(boardZoneUnfocusedPosition, 1f).OnComplete(()=>EnableInteractions());
     }
 
     public void FocusPlayer()
     {
+        DisableInteractions();
         playerZoneRaycastBlocker.gameObject.SetActive(false);
         UnFocusBoard();
         playerZone.DOMove(playerZoneFocusedPosition, 1f).OnComplete(() => 
             {
                 playerZoneFocused = true;
                 OnPlayerFocused?.Invoke(); 
+                EnableInteractions();
             });
     }
 
     public void UnFocusPlayer()
     {
+        DisableInteractions();
         playerZoneRaycastBlocker.gameObject.SetActive(true);
         playerZoneFocused = false;
-        playerZone.DOMove(playerZoneUnfocusedPosition, 1f);
+        playerZone.DOMove(playerZoneUnfocusedPosition, 1f).OnComplete(() => EnableInteractions());
     }
 
     public void UseCard()

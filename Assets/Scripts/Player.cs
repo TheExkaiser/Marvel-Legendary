@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     Transform cardTransform;
     int playerHandCardsCount;
     int playedCardsCount;
+    Card previouslySelectedCard;
 
     public event Action OnDrawNewHandEnd;
     public event Action OnAddsAttacks;
@@ -57,18 +58,20 @@ public class Player : MonoBehaviour
     {
         if (card.selectable)
         {
-            if (selectedCard != null)
-            {
-                DeselectCard();
-            }
+            gameManager.DisableInteractions();
+
+            DeselectCard();
 
             cardTransform = card.transform;
 
             card.selectable = false;
             uiManager.EnableUseCardButton(card);
-            card.selected = true;
             selectedCard = card;
-            card.gameObject.transform.DOMove(new Vector3(cardTransform.position.x, cardTransform.position.y + card.selectedMoveDistance, cardTransform.position.z), 0.3f).OnComplete(() => { card.selectable = true; });
+            card.gameObject.transform.DOMove(new Vector3(cardTransform.position.x, cardTransform.position.y + card.selectedMoveDistance, cardTransform.position.z), 0.3f).OnComplete(() => 
+            { 
+                card.selected = true;
+                gameManager.EnableInteractions(); 
+            });
         }
 
     }
@@ -77,22 +80,28 @@ public class Player : MonoBehaviour
     {
         if (selectedCard)
         {
-            cardTransform = selectedCard.transform;
-            selectedCard.selectable = false;
+            gameManager.DisableInteractions();
             selectedCard.selected = false;
+            previouslySelectedCard = selectedCard;
+            cardTransform = previouslySelectedCard.transform;
+            previouslySelectedCard.selectable = false;
+            previouslySelectedCard.selected = false;
             uiManager.DisableUseCardButton();
-            cardTransform.DOMove(new Vector3(cardTransform.position.x, cardTransform.position.y - selectedCard.selectedMoveDistance, cardTransform.position.z), 0.3f).OnComplete(() =>
+            cardTransform.DOMove(new Vector3(cardTransform.position.x, cardTransform.position.y - previouslySelectedCard.selectedMoveDistance, cardTransform.position.z), 0.3f).OnComplete(() =>
             {
-                if (!selectedCard.played)
+                if (!previouslySelectedCard.played)
                 {
-                    selectedCard.selectable = true;
+                    previouslySelectedCard.selectable = true;
                 }
                 else
                 {
-                    selectedCard.selectable = false;
+                    previouslySelectedCard.selectable = false;
                 }
 
+                previouslySelectedCard = null;
                 selectedCard = null;
+
+                gameManager.EnableInteractions();
 
             });
         }

@@ -90,6 +90,8 @@ public class Card : MonoBehaviour, IClickable
     {
         if (!selected)
         {
+            playerComponent.DeselectCard();
+            
             playerComponent.SelectCard(this);
         }
         else
