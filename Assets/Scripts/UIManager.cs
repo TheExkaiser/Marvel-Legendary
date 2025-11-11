@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI playerResourcesText;
     [SerializeField] TextMeshProUGUI playerAttacksText;
     [SerializeField] TextMeshProUGUI toggleViewButtonText;
+
     
 
     public UINewStateAnimation uiNewStateAnimation;
@@ -24,6 +25,8 @@ public class UIManager : MonoBehaviour
     bool playerZoneActive = false;
     public Button useCardButton;
     public TextMeshProUGUI useCardButtonText;
+    [SerializeField] GameObject buttonEndTurn;
+    [SerializeField] GameObject buttonToggleView;
 
     [Header("Card Info Panel")]
     [SerializeField] GameObject cardInfoPanel;
@@ -128,6 +131,18 @@ public class UIManager : MonoBehaviour
     public void CloseCardInfoPanel()
     {
         cardInfoPanel.SetActive(false);
+    }
+
+    public void HideGameViewButtons()
+    {
+        buttonEndTurn.SetActive(false);
+        buttonToggleView.SetActive(false);
+    }
+
+    public void ShowGameViewButtons()
+    {
+        buttonEndTurn.SetActive(true);
+        buttonToggleView.SetActive(true);
     }
 
 }

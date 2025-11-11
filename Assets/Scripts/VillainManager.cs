@@ -67,7 +67,7 @@ public class VillainManager : MonoBehaviour
                 }
             }
 
-            OnVillainCardDrawn.Invoke();
+            OnVillainCardDrawn?.Invoke();
             yield return new WaitForSeconds(1f);
         }
         while (drawAnotherCard);     
@@ -125,7 +125,7 @@ public class VillainManager : MonoBehaviour
         gameManager.DrawFromDeck(villainDeckTransform, villainDeckContents, villainDeckTransform, 1, Card.CardLocation.City);
         GameObject bystanderCard = villainDeckTransform.GetChild(0).gameObject;
         citySpace.GetChild(0).gameObject.GetComponent<Card>().AssignCard(bystanderCard);
-        OnVillainCatchesBystander.Invoke();
+        OnVillainCatchesBystander?.Invoke();
     }
 
     void MastermindCatchesBystander()

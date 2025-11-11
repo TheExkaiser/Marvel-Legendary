@@ -23,6 +23,8 @@ public class StatePlayersTurn : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
+        gameManager.OnPlayerFocused += uiManager.ShowGameViewButtons;
+        gameManager.OnPlayerFocused += gameManager.EnableInteractions;
         uiManager.uiNewStateAnimation.OnNewStateAnimationEnd += gameManager.FocusPlayer;
         uiManager.uiNewStateAnimation.PlayAnimation(phaseName);
         Debug.Log(phaseName);
@@ -31,10 +33,15 @@ public class StatePlayersTurn : MonoBehaviour
     private void OnDisable()
     {
         uiManager.uiNewStateAnimation.OnNewStateAnimationEnd -= gameManager.FocusPlayer;
+        gameManager.OnPlayerFocused -= uiManager.ShowGameViewButtons;
+        gameManager.OnPlayerFocused -= gameManager.EnableInteractions;
+
     }
 
     public void EndTurn()
     {
+        uiManager.HideGameViewButtons();
+        gameManager.DisableInteractions();
         player.DiscardHand();
         player.DiscardPlayedCards();
         player.ResetAttacks();

@@ -140,12 +140,12 @@ public class GameManager : MonoBehaviour
 
     public void EnableInteractions()
     {
-        clickHandler.interactionAllowed = true;
+        clickHandler.enabled = true;
     }
 
     public void DisableInteractions() 
     {
-        clickHandler.interactionAllowed = false;
+        clickHandler.enabled = false;
     }
 
     public void FocusBoard()
